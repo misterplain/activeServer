@@ -130,6 +130,8 @@ const dataSchema = new Schema({
       },
     },
   ],
+},{
+  collection: 'notepadData', // specify custom collection name
 });
 
 module.exports = mongoose.model("Data", dataSchema);

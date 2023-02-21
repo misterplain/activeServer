@@ -1,9 +1,10 @@
 require("dotenv").config({ path: __dirname + "/.env" });
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const keepServerActive = require("./keepServerActive");
-const scheduledAPICall = require("./scheduledAPICall");
+const keepServerActive = require("./middleware/keepServerActive");
+const scheduledAPICall = require("./middleware/HPNotePad/scheduledAPICall");
 const connectDB = require("./config/connectDB");
 const contactRoute = require("./route/HPNotePad/contactRoute");
 const logRoute = require("./route/HPNotePad/logRoute");
@@ -18,7 +19,6 @@ app.use("/", express.static(path.resolve(path.join(__dirname, "./build"))));
 
 app.use(express.json());
 app.use(cors());
-console.log("test");
 
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/log", logRoute);

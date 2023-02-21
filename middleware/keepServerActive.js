@@ -8,7 +8,7 @@ function keepServerActive() {
     // Do whatever you want in here. Send email, Make  database backup or download data.
     try {
       axios.post(
-        "https://hpnotepad-test-api.onrender.com/log"
+        "https://activeserver.onrender.com/log"
       );
     //   console.log("res", res);
     } catch (error) {
