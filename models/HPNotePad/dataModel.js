@@ -92,16 +92,16 @@ const dataSchema = new Schema({
       },
     },
   ],
-  moonPhase: {
-    mainText: {
-      type: String,
-      required: true,
-    },
-    emoji: {
-      type: String,
-      required: true,
-    },
-  },
+  // moonPhase: {
+  //   mainText: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   emoji: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
   news: [
     {
       title: {
@@ -126,7 +126,7 @@ const dataSchema = new Schema({
       },
       image: {
         type: String,
-        required: true,
+        // required: true,
       },
     },
   ],
