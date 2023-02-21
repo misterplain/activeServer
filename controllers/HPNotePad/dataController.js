@@ -262,7 +262,7 @@ const fetchData = asyncHandler(async (req, res) => {
       }
       setTimeout(async () => {
         //third api call - moon phase
-        fetchedDataObject.moonPhase = await getMoonPhase();
+        // fetchedDataObject.moonPhase = await getMoonPhase();
         setTimeout(async () => {
           //fourth api call - weather
           fetchedDataObject.forecast = await getForecast();
@@ -302,7 +302,7 @@ const saveDataToDB = async (objectToSave, req, res) => {
     date: time,
     horoscope: objectToSave.horoscope,
     joke: objectToSave.joke,
-    moonPhase: objectToSave.moonPhase,
+    // moonPhase: objectToSave.moonPhase,
     forecast: objectToSave.forecast,
     news: objectToSave.news,
   });

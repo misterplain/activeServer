@@ -66,16 +66,16 @@ const dataSchema = new Schema({
       required: true,
     },
   },
-  moonPhase: {
-    mainText: {
-      type: String,
-      required: true,
-    },
-    emoji: {
-      type: String,
-      required: true,
-    },
-  },
+  // moonPhase: {
+  //   mainText: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   emoji: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
   forecast: [
     {
       date: {
