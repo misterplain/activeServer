@@ -109,10 +109,10 @@ const getMoonPhase = async () => {
     method: "GET",
     url: "https://moon-phase.p.rapidapi.com/moon_phase/",
     headers: {
-      //gmail key
-      // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-      //yahoo key
-      "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+      // gmail key
+      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+      // yahoo key
+      // "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
   };
