@@ -43,7 +43,7 @@ mongoose.connection.on("error", (err) => {
 app.use("/", express.static(path.resolve(path.join(__dirname, "./build"))));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors("*"));
 
 //keep server active
 keepServerActive();
