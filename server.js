@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/notepad/contact", contactRoute);
-app.use("/notepad/log", logRoute);
+app.use("/log", logRoute);
 app.use("/notepad/data", dataRoute);
 
 keepServerActive();
