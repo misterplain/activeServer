@@ -2,6 +2,8 @@ const Data = require("../../models/HPNotePad/dataModel");
 const asyncHandler = require("express-async-handler");
 const axios = require("axios");
 
+const errorMessage = "Error in fetching data";
+
 const getJoke = async () => {
   const options = {
     method: "GET",
