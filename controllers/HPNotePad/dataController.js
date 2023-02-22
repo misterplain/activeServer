@@ -14,13 +14,6 @@ const getJoke = async () => {
     },
   };
 
-  // try {
-  //   const response = axios.request(options);
-  //   return response.data.body
-  // } catch (error) {
-  //   console.log(error);
-  // }
-
   try {
     let response = await axios.request(options);
     if (response.status >= 200 && response.status < 300) {
@@ -39,45 +32,6 @@ const getJoke = async () => {
     return errorMessage;
   }
 };
-
-// // @desc    fetch data
-// // @route   get /api/data
-// // @access  Public
-// const fetchData = asyncHandler(async (req, res) => {
-//   let date = new Date();
-//   const object = {};
-
-//   console.log(object);
-
-//   setTimeout(async () => {
-//     object.joke = await getJoke();
-//     setTimeout(async () => {
-//       console.log(object);
-//       setTimeout(async () => {
-//         console.log(object.joke.data.body[0]?.setup);
-//         console.log(object.joke.data.body[0]?.punchline);
-//         saveDataToDB(object);
-//       }, 10000); // delay of 3 seconds
-//     }, 10000); // delay of 3 seconds
-//   }, 10000); // delay of 3 seconds
-
-// });
-
-// const saveDataToDB = async (passedFromCall, req, res) => {
-// let time = new Date();
-
-// const newData = await Data.create({
-//   date: time,
-//   joke: {
-//     setup:  passedFromCall.joke.data.body[0].setup.toString(),
-//     punchline: passedFromCall.joke.data.body[0].punchline.toString(),
-//   },
-// });
-// await newData.save();
-
-// };
-
-//refactoried with an API that produces 1000 requests per day
 
 const getHoroscope = async (signHS) => {
   const options = {
@@ -195,9 +149,7 @@ const getNews = async () => {
       console.log("success");
       const items = response.data.value;
       const extractedData = items.slice(0, 5).map((item) => ({
-        // date: item.date,
-        // min: item.temperature.min,
-        // max: item.temperature.max,
+
         title: item.title,
         url: item.url,
         description: item.description,
