@@ -248,31 +248,50 @@ const fetchData = asyncHandler(async (req, res) => {
   }, 3000); // delay of 3 seconds
 });
 
+// const saveDataToDB = async (objectToSave, req, res) => {
+//   let time = new Date();
+//   console.log(objectToSave + "objectToSave from within saveDataToDB");
+
+//   const newData = new Data({
+//     date: time,
+//     horoscope: objectToSave.horoscope,
+//     joke: objectToSave.joke,
+//     moonPhase: objectToSave.moonPhase,
+//     forecast: objectToSave.forecast,
+//     news: objectToSave.news,
+//   });
+//   console.log(newData + "newData from within saveDataToDB");
+//   newData.save((error) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log("saved to db");
+//     }
+//   });
+
+//   console.log(objectToSave + "objectToSave from within saveDataToDB");
+// };
+
 const saveDataToDB = async (objectToSave, req, res) => {
   let time = new Date();
-  console.log(objectToSave + "objectToSave from within saveDataToDB");
 
-  const newData = new Data({
-    date: time,
-    horoscope: objectToSave.horoscope,
-    joke: objectToSave.joke,
-    moonPhase: objectToSave.moonPhase,
-    forecast: objectToSave.forecast,
-    news: objectToSave.news,
-  });
-  console.log(newData + "newData from within saveDataToDB");
-  newData.save((error) => {
+  newData.save((error, newData) => {
     if (error) {
       console.log(error);
     } else {
       console.log("saved to db");
+      console.log(objectToSave + "objectToSave from within saveDataToDB");
+      console.log(newData + "newData from within saveDataToDB");
     }
+    const newData = new Data({ 
+      date: time, 
+      horoscope: objectToSave.horoscope,
+      joke: objectToSave.joke,
+      moonPhase: objectToSave.moonPhase,
+      forecast: objectToSave.forecast,
+      news: objectToSave.news
+    });
   });
-  // .then((result) => {
-  //   console.log("note saved!");
-  // });
-
-  console.log(objectToSave + "objectToSave from within saveDataToDB");
 };
 
 // @desc    fetch data

@@ -5,8 +5,6 @@ const bcrypt = require("bcrypt");
 const { roundToNearestMinutesWithOptions } = require("date-fns/fp");
 
 let refreshTokens = [];
-//check expiry date of token and refresh if it's about to expire then create a new token, otherwise only create new access token but not refresh token 
-//Express-rate-limit
 
 // @desc    Auth user & get token
 // @route   POST /login
@@ -53,14 +51,6 @@ const authUser = asyncHandler(async (req, res) => {
     refreshTokens: refreshTokens,
     text: "refresh token array after login",
   });
-
-  // Create secure cookie with refresh token
-  // res.cookie("jwt", refreshToken, {
-  //   httpOnly: true, //accessible only by web server
-  //   secure: false, //https
-  //   sameSite: "None", //cross-site cookie
-  //   maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
-  // });
 
   // Send accessToken containing username and roles
   res.json({ foundUser, accessToken, refreshToken });
