@@ -278,6 +278,7 @@ const saveDataToDB = async (objectToSave, req, res) => {
   newData.save((error, newData) => {
     if (error) {
       console.log(error);
+      console.log("error from within saveDataToDB")
     } else {
       console.log("saved to db");
       console.log(objectToSave + "objectToSave from within saveDataToDB");
