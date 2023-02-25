@@ -14,7 +14,8 @@ function scheduledAPICall() {
       axios.post("https://activeserver.onrender.com/notepad/data");
       //   console.log("res", res);
     } catch (error) {
-      console.log(error.message);
+      console.log(error)
+      console.log("error within scheduledAPICall");
     }
   });
 }

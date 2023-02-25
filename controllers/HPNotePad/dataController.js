@@ -248,52 +248,53 @@ const fetchData = asyncHandler(async (req, res) => {
   }, 3000); // delay of 3 seconds
 });
 
-// const saveDataToDB = async (objectToSave, req, res) => {
-//   let time = new Date();
-//   console.log(objectToSave + "objectToSave from within saveDataToDB");
-
-//   const newData = new Data({
-//     date: time,
-//     horoscope: objectToSave.horoscope,
-//     joke: objectToSave.joke,
-//     moonPhase: objectToSave.moonPhase,
-//     forecast: objectToSave.forecast,
-//     news: objectToSave.news,
-//   });
-//   console.log(newData + "newData from within saveDataToDB");
-//   newData.save((error) => {
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       console.log("saved to db");
-//     }
-//   });
-
-//   console.log(objectToSave + "objectToSave from within saveDataToDB");
-// };
-
 const saveDataToDB = async (objectToSave, req, res) => {
   let time = new Date();
+  console.log(objectToSave + "objectToSave from within saveDataToDB");
 
-  newData.save((error, newData) => {
+  const newData = new Data({
+    date: time,
+    horoscope: objectToSave.horoscope,
+    joke: objectToSave.joke,
+    moonPhase: objectToSave.moonPhase,
+    forecast: objectToSave.forecast,
+    news: objectToSave.news,
+  });
+  newData.save((error) => {
     if (error) {
       console.log(error);
       console.log("error from within saveDataToDB")
     } else {
       console.log("saved to db");
-      console.log(objectToSave + "objectToSave from within saveDataToDB");
-      console.log(newData + "newData from within saveDataToDB");
+      console.log(objectToSave + "objectToSave successfully saved from within saveDataToDB");
+      console.log(newData + "newData successfully saved from within saveDataToDB");
     }
-    const newData = new Data({ 
-      date: time, 
-      horoscope: objectToSave.horoscope,
-      joke: objectToSave.joke,
-      moonPhase: objectToSave.moonPhase,
-      forecast: objectToSave.forecast,
-      news: objectToSave.news
-    });
   });
+
 };
+
+// const saveDataToDB = async (objectToSave, req, res) => {
+//   let time = new Date();
+
+//   newData.save((error, newData) => {
+//     if (error) {
+//       console.log(error);
+//       console.log("error from within saveDataToDB")
+//     } else {
+//       console.log("saved to db");
+//       console.log(objectToSave + "objectToSave from within saveDataToDB");
+//       console.log(newData + "newData from within saveDataToDB");
+//     }
+//     const newData = new Data({ 
+//       date: time, 
+//       horoscope: objectToSave.horoscope,
+//       joke: objectToSave.joke,
+//       moonPhase: objectToSave.moonPhase,
+//       forecast: objectToSave.forecast,
+//       news: objectToSave.news
+//     });
+//   });
+// };
 
 // @desc    fetch data
 // @route   get /api/data
