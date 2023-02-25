@@ -325,6 +325,7 @@ const saveDataToDB = async (objectToSave, req, res) => {
       console.log(
         newData + "newData successfully saved from within saveDataToDB"
       );
+      res.status(200).json({ message: "Data saved to DB" })
     }
   });
 };
