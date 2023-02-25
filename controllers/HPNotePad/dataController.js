@@ -66,9 +66,9 @@ const getMoonPhase = async () => {
     url: "https://moon-phase.p.rapidapi.com/moon_phase/",
     headers: {
       // gmail key
-      // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       // yahoo key
-      "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+      // "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
   };
@@ -312,22 +312,37 @@ const saveDataToDB = async (objectToSave, req, res) => {
     forecast: objectToSave.forecast,
     news: objectToSave.news,
   });
-  newData.save((error) => {
-    if (error) {
-      console.log(error);
-      console.log("error from within saveDataToDB");
-    } else {
-      console.log("saved to db");
-      console.log(
-        objectToSave +
-          "objectToSave successfully saved from within saveDataToDB"
-      );
-      console.log(
-        newData + "newData successfully saved from within saveDataToDB"
-      );
-      res.status(200).json({ message: "Data saved to DB" })
-    }
-  });
+  // newData.save((error) => {
+  //   if (error) {
+  //     console.log(error);
+  //     console.log("error from within saveDataToDB");
+  //   } else {
+  //     console.log("saved to db");
+  //     console.log(
+  //       objectToSave +
+  //         "objectToSave successfully saved from within saveDataToDB"
+  //     );
+  //     console.log(
+  //       newData + "newData successfully saved from within saveDataToDB"
+  //     );
+  //     res.status(200).json({ message: "Data saved to DB" })
+  //   }
+  // });
+  try {
+    await newData.save();
+    console.log("saved to db");
+    console.log(
+      objectToSave + "objectToSave successfully saved from within saveDataToDB"
+    );
+    console.log(
+      newData + "newData successfully saved from within saveDataToDB"
+    );
+    res.status(200).json({ message: "Data saved to DB" });
+  } catch (error) {
+    console.error(error);
+    console.log("error from within saveDataToDB");
+    res.status(500).json({ error: error.message });
+  }
 };
 
 // const saveDataToDB = async (objectToSave, req, res) => {
