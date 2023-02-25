@@ -66,9 +66,9 @@ const getMoonPhase = async () => {
     url: "https://moon-phase.p.rapidapi.com/moon_phase/",
     headers: {
       // gmail key
-      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+      // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       // yahoo key
-      // "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+      "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
   };
@@ -337,11 +337,15 @@ const saveDataToDB = async (objectToSave, req, res) => {
     console.log(
       newData + "newData successfully saved from within saveDataToDB"
     );
-    res.status(200).json({ message: "Data saved to DB" });
+    if (res) {
+      res.status(200).json({ message: "Data saved to DB" });
+    }
   } catch (error) {
     console.error(error);
     console.log("error from within saveDataToDB");
-    res.status(500).json({ error: error.message });
+    if (res) {
+      res.status(500).json({ message: "Error saving data to DB" });
+    }
   }
 };
 
