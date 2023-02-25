@@ -66,9 +66,9 @@ const getMoonPhase = async () => {
     url: "https://moon-phase.p.rapidapi.com/moon_phase/",
     headers: {
       // gmail key
-      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+      // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       // yahoo key
-      // "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+      "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
   };
@@ -149,7 +149,6 @@ const getNews = async () => {
       console.log("success");
       const items = response.data.value;
       const extractedData = items.slice(0, 5).map((item) => ({
-
         title: item.title,
         url: item.url,
         description: item.description,
@@ -172,6 +171,82 @@ const getNews = async () => {
 // @desc    fetch data
 // @route   get /api/data
 // @access  Public
+// const fetchData = asyncHandler(async (req, res) => {
+//   let time = new Date();
+//   let fetchedDataObject = {};
+//   fetchedDataObject.date = time;
+//   fetchedDataObject.horoscope = {};
+//   const horoscopeData = {};
+
+//   setTimeout(async () => {
+//     ///first API call - joke
+//     fetchedDataObject.joke = await getJoke();
+//     setTimeout(async () => {
+//       // second API call - horoscopes
+//       const horoscopeSigns = [
+//         "aquarius",
+//         "pisces",
+//         "aries",
+//         "taurus",
+//         "gemini",
+//         "cancer",
+//         "leo",
+//         "virgo",
+//         "libra",
+//         "scorpio",
+//         "sagittarius",
+//         "capricorn",
+//       ];
+//       {
+//         horoscopeSigns.map((sign) => {
+//           setTimeout(async () => {
+//             getHoroscope(sign)
+//               .then((data) => {
+//                 console.log(data);
+//                 horoscopeData[sign] = data;
+//                 fetchedDataObject.horoscope = horoscopeData;
+//                 console.log("fetchedData".horoscope);
+//               })
+//               .catch((error) => {
+//                 console.log(error);
+//               });
+//           }, 3000); // delay of 3 seconds
+//         });
+//       }
+//       setTimeout(async () => {
+//         //third api call - moon phase
+//         fetchedDataObject.moonPhase = await getMoonPhase();
+//         setTimeout(async () => {
+//           //fourth api call - weather
+//           fetchedDataObject.forecast = await getForecast();
+//           setTimeout(async () => {
+//             //fifth API call - get news
+//             fetchedDataObject.news = await getNews();
+//             setTimeout(async () => {
+//               console.log("fetchedData");
+//               setTimeout(async () => {
+//                 console.log("fetchedData");
+//                 setTimeout(async () => {
+//                   console.log("fetchedData");
+//                   setTimeout(async () => {
+//                     console.log("fetchedData");
+//                     setTimeout(async () => {
+//                       console.log("fetchedData");
+//                       setTimeout(async () => {
+//                         saveDataToDB(fetchedDataObject);
+//                       }, 3000);
+//                     }, 3000);
+//                   }, 3000);
+//                 }, 3000);
+//               }, 3000);
+//             }, 3000);
+//           }, 3000);
+//         }, 3000);
+//       }, 3000); // delay of 3 seconds
+//     }, 3000); // delay of 3 seconds
+//   }, 3000); // delay of 3 seconds
+// });
+
 const fetchData = asyncHandler(async (req, res) => {
   let time = new Date();
   let fetchedDataObject = {};
@@ -179,73 +254,50 @@ const fetchData = asyncHandler(async (req, res) => {
   fetchedDataObject.horoscope = {};
   const horoscopeData = {};
 
-  setTimeout(async () => {
-    ///first API call - joke
-    fetchedDataObject.joke = await getJoke();
-    setTimeout(async () => {
-      // second API call - horoscopes
-      const horoscopeSigns = [
-        "aquarius",
-        "pisces",
-        "aries",
-        "taurus",
-        "gemini",
-        "cancer",
-        "leo",
-        "virgo",
-        "libra",
-        "scorpio",
-        "sagittarius",
-        "capricorn",
-      ];
-      {
-        horoscopeSigns.map((sign) => {
-          setTimeout(async () => {
-            getHoroscope(sign)
-              .then((data) => {
-                console.log(data);
-                horoscopeData[sign] = data;
-                fetchedDataObject.horoscope = horoscopeData;
-                console.log("fetchedData".horoscope);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }, 3000); // delay of 3 seconds
-        });
-      }
-      setTimeout(async () => {
-        //third api call - moon phase
-        fetchedDataObject.moonPhase = await getMoonPhase();
-        setTimeout(async () => {
-          //fourth api call - weather
-          fetchedDataObject.forecast = await getForecast();
-          setTimeout(async () => {
-            //fifth API call - get news
-            fetchedDataObject.news = await getNews();
-            setTimeout(async () => {
-              console.log("fetchedData");
-              setTimeout(async () => {
-                console.log("fetchedData");
-                setTimeout(async () => {
-                  console.log("fetchedData");
-                  setTimeout(async () => {
-                    console.log("fetchedData");
-                    setTimeout(async () => {
-                      console.log("fetchedData");
-                      setTimeout(async () => {
-                        saveDataToDB(fetchedDataObject);
-                      }, 3000);
-                    }, 3000);
-                  }, 3000);
-                }, 3000);
-              }, 3000);
-            }, 3000);
-          }, 3000);
-        }, 3000);
-      }, 3000); // delay of 3 seconds
-    }, 3000); // delay of 3 seconds
-  }, 3000); // delay of 3 seconds
+  const [joke, moonPhase, forecast, news] = await Promise.all([
+    getJoke(),
+    getMoonPhase(),
+    getForecast(),
+    getNews(),
+  ]);
+
+  //assign jokes data
+  fetchedDataObject.joke = joke;
+
+  //assign moonPhase data
+  fetchedDataObject.moonPhase = moonPhase;
+
+  //assign forecast data
+  fetchedDataObject.forecast = forecast;
+
+  //assign news data
+  fetchedDataObject.news = news;
+
+  //assign horoscopes data
+  const horoscopeSigns = [
+    "aquarius",
+    "pisces",
+    "aries",
+    "taurus",
+    "gemini",
+    "cancer",
+    "leo",
+    "virgo",
+    "libra",
+    "scorpio",
+    "sagittarius",
+    "capricorn",
+  ];
+  const results = await Promise.all(
+    horoscopeSigns.map(async (sign) => await getHoroscope(sign))
+  );
+  results.forEach((result, index) => {
+    horoscopeData[horoscopeSigns[index]] = result;
+  });
+  fetchedDataObject.horoscope = horoscopeData;
+
+  //save data to db
+  saveDataToDB(fetchedDataObject);
 });
 
 const saveDataToDB = async (objectToSave, req, res) => {
@@ -263,14 +315,18 @@ const saveDataToDB = async (objectToSave, req, res) => {
   newData.save((error) => {
     if (error) {
       console.log(error);
-      console.log("error from within saveDataToDB")
+      console.log("error from within saveDataToDB");
     } else {
       console.log("saved to db");
-      console.log(objectToSave + "objectToSave successfully saved from within saveDataToDB");
-      console.log(newData + "newData successfully saved from within saveDataToDB");
+      console.log(
+        objectToSave +
+          "objectToSave successfully saved from within saveDataToDB"
+      );
+      console.log(
+        newData + "newData successfully saved from within saveDataToDB"
+      );
     }
   });
-
 };
 
 // const saveDataToDB = async (objectToSave, req, res) => {
@@ -285,8 +341,8 @@ const saveDataToDB = async (objectToSave, req, res) => {
 //       console.log(objectToSave + "objectToSave from within saveDataToDB");
 //       console.log(newData + "newData from within saveDataToDB");
 //     }
-//     const newData = new Data({ 
-//       date: time, 
+//     const newData = new Data({
+//       date: time,
 //       horoscope: objectToSave.horoscope,
 //       joke: objectToSave.joke,
 //       moonPhase: objectToSave.moonPhase,
@@ -337,7 +393,7 @@ const getDataByDate = asyncHandler(async (req, res) => {
 const deleteAllData = asyncHandler(async (req, res) => {
   console.log("deleteAllData");
 
-  const dateToFind = "2023-02-12"
+  const dateToFind = "2023-02-12";
   // const dateToFind = req.params.date;
   const startOfDay = new Date(dateToFind);
   console.log(startOfDay);
@@ -348,10 +404,10 @@ const deleteAllData = asyncHandler(async (req, res) => {
       date: { $lte: endOfDay },
     });
     res.json(data);
-    console.log("data deleted")
+    console.log("data deleted");
   } catch (error) {
     console.log(error);
-  
+
     res.status(500).end();
   }
 });
