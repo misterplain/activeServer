@@ -340,12 +340,14 @@ const saveDataToDB = async (objectToSave, req, res) => {
     if (res) {
       res.status(200).json({ message: "Data saved to DB" });
     }
+    return;
   } catch (error) {
     console.error(error);
     console.log("error from within saveDataToDB");
     if (res) {
       res.status(500).json({ message: "Error saving data to DB" });
     }
+    return;
   }
 };
 

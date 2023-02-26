@@ -100,3 +100,5 @@
 20230222	22:11:11	e53c0c17-8fae-44f0-a670-089d1c7acc77	OPTIONS	/bcnmin/logout	http://localhost:3000
 20230222	22:11:11	fd67ed52-38ea-444a-ad7d-47838882cf9a	POST	/bcnmin/logout	http://localhost:3000
 20230222	22:11:11	0ae6e308-40b1-423f-a606-93004b3dd645	GET	/bcnmin/blogs	http://localhost:3000
+20230225	19:44:55	95d9d745-d8b4-43db-abce-fd2e15e9d242	POST	/notepad/contact	undefined
+20230225	19:45:06	8404500f-f5c7-4ed1-b7f5-9d88ef008c2c	POST	/notepad/contact	undefined
