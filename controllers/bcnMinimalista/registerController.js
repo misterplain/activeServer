@@ -51,7 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     // Send accessToken containing username and roles
-    res.json({ accessToken });
+    res.json({ accessToken, refreshToken });
   } else {
     res.status(400).json({ message: "Invalid user data received" });
   }

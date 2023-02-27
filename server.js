@@ -58,7 +58,7 @@ app.use("/notepad/data", dataRoute);
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);
 app.use("/bcnmin/auth", authRoutes);
-app.use("/bcnmin/register", registerRoutes);
+// app.use("/bcnmin/register", authRoutes);
 app.use("/bcnmin/refresh", refreshRoutes);
 app.use("/bcnmin/logout", logoutRoutes);
 app.use("/bcnmin/blogs", blogsRoutes);
