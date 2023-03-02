@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
     to: process.env.GMAIL_USER,
     subject: `Portfolio - contact from ${name}`,
     html: `
-    <h3>Message from ${name}</h3>
+    <h3>Message from ${name} - ${email}</h3>
     <p>Message: ${message}</p>
    `,
   };
