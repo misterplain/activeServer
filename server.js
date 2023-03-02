@@ -24,6 +24,8 @@ const blogsRoutes = require("./routes/bcnMinimalista/blogsRoutes");
 const collabRoutes = require("./routes/bcnMinimalista/collabRoutes");
 const favoritesRoutes = require("./routes/bcnMinimalista/favoritesRoutes");
 const commentsRoutes = require("./routes/bcnMinimalista/commentsRoutes");
+//porfolio routes
+const contactPortfolioRoute = require("./routes/portfolio/contactRoute");
 
 const app = express();
 
@@ -54,17 +56,19 @@ scheduledAPICall();
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
 
-
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);
 app.use("/bcnmin/auth", authRoutes);
-// app.use("/bcnmin/register", authRoutes);
 app.use("/bcnmin/refresh", refreshRoutes);
 app.use("/bcnmin/logout", logoutRoutes);
 app.use("/bcnmin/blogs", blogsRoutes);
 app.use("/bcnmin/collab", collabRoutes)
 app.use("/bcnmin/favorites", favoritesRoutes);
 app.use("/bcnmin/comments", commentsRoutes);
+
+//portfolio
+
+app.use("/portfolio/contact", contactPortfolioRoute);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`server listing to port 5000 only`));
