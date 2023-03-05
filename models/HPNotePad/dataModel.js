@@ -69,11 +69,11 @@ const dataSchema = new Schema({
   moonPhase: {
     mainText: {
       type: String,
-      required: true,
+      // required: true,
     },
     emoji: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   forecast: [
