@@ -9,61 +9,61 @@ const dataSchema = new Schema({
   joke: {
     setup: {
       type: String,
-      required: true,
+      // required: true,
     },
     punchline: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   horoscope: {
     aries: {
       type: String,
-      required: true,
+      // required: true,
     },
     taurus: {
       type: String,
-      required: true,
+      // required: true,
     },
     gemini: {
       type: String,
-      required: true,
+      // required: true,
     },
     cancer: {
       type: String,
-      required: true,
+      // required: true,
     },
     leo: {
       type: String,
-      required: true,
+      // required: true,
     },
     virgo: {
       type: String,
-      required: true,
+      // required: true,
     },
     libra: {
       type: String,
-      required: true,
+      // required: true,
     },
     scorpio: {
       type: String,
-      required: true,
+      // required: true,
     },
     sagittarius: {
       type: String,
-      required: true,
+      // required: true,
     },
     capricorn: {
       type: String,
-      required: true,
+      // required: true,
     },
     aquarius: {
       type: String,
-      required: true,
+      // required: true,
     },
     pisces: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   moonPhase: {
@@ -80,15 +80,15 @@ const dataSchema = new Schema({
     {
       date: {
         type: String,
-        required: true,
+        // required: true,
       },
       min: {
         type: Number,
-        required: true,
+        // required: true,
       },
       max: {
         type: Number,
-        required: true,
+        // required: true,
       },
     },
   ],
@@ -106,23 +106,23 @@ const dataSchema = new Schema({
     {
       title: {
         type: String,
-        required: true,
+        // required: true,
       },
       description: {
         type: String,
-        required: true,
+        // required: true,
       },
       url: {
         type: String,
-        required: true,
+        // required: true,
       },
       body: {
         type: String,
-        required: true,
+        // required: true,
       },
       snippet: {
         type: String,
-        required: true,
+        // required: true,
       },
       image: {
         type: String,
