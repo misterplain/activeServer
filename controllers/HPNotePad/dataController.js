@@ -2,7 +2,7 @@ const Data = require("../../models/HPNotePad/dataModel");
 const asyncHandler = require("express-async-handler");
 const axios = require("axios");
 
-const errorMessage = "Error in fetching data";
+const errorMessage = "Error";
 
 const getJoke = async () => {
   const options = {
@@ -33,22 +33,56 @@ const getJoke = async () => {
   }
 };
 
+// const getHoroscope = async (signHS) => {
+//   const options = {
+//     method: "POST",
+//     url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
+//     params: { sign: `${signHS}`, day: "today" },
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "sameer-kumar-aztro-v1.p.rapidapi.com",
+//     },
+//   };
+//   // const errorMessage = "Error in fetching data";
+//   try {
+//     let response = await axios.request(options);
+//     if (response.status >= 200 && response.status < 300) {
+//       console.log("success");
+//       return response.data.description;
+//     } else {
+//       console.log("success");
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return errorMessage;
+//   }
+// };
+
 const getHoroscope = async (signHS) => {
+  // const options = {
+  //   method: "POST",
+  //   url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
+  //   params: { sign: `${signHS}`, day: "today" },
+  //   headers: {
+  //     "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+  //     "X-RapidAPI-Host": "sameer-kumar-aztro-v1.p.rapidapi.com",
+  //   },
+  // };
   const options = {
-    method: "POST",
-    url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
-    params: { sign: `${signHS}`, day: "today" },
-    headers: {
-      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-      "X-RapidAPI-Host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-    },
+    method: 'GET',
+    url: `https://ohmanda.com/api/horoscope/${signHS}/`,
+    // params: {sign: `${signHS}`, day: 'today', lang: 'en', period: 'day'},
+    // headers: {
+    //   'X-RapidAPI-Key': '0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95',
+    //   'X-RapidAPI-Host': 'horoskopos.p.rapidapi.com'
+    // }
   };
-  // const errorMessage = "Error in fetching data";
   try {
     let response = await axios.request(options);
     if (response.status >= 200 && response.status < 300) {
       console.log("success");
-      return response.data.description;
+      return response.data.horoscope;
     } else {
       console.log("success");
       return errorMessage;
@@ -58,6 +92,7 @@ const getHoroscope = async (signHS) => {
     return errorMessage;
   }
 };
+
 
 //third api call - moonphase
 const getMoonPhase = async () => {
@@ -433,5 +468,7 @@ const deleteAllData = asyncHandler(async (req, res) => {
     res.status(500).end();
   }
 });
+
+
 
 module.exports = { fetchData, getDataByDate, deleteAllData };
