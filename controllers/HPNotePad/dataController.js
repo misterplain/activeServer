@@ -71,7 +71,7 @@ const getHoroscope = async (signHS) => {
   };
   try {
     let response = await axios.request(options);
-    if (response.status >= 200 && response.status < 300) {
+    if (response.data.horoscope) {
       console.log("success");
       return response.data.horoscope;
     } else {
