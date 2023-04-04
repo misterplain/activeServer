@@ -60,15 +60,6 @@ const getJoke = async () => {
 // };
 
 const getHoroscope = async (signHS) => {
-  // const options = {
-  //   method: "POST",
-  //   url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
-  //   params: { sign: `${signHS}`, day: "today" },
-  //   headers: {
-  //     "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-  //     "X-RapidAPI-Host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-  //   },
-  // };
   const options = {
     method: 'GET',
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
@@ -377,7 +368,7 @@ const saveDataToDB = async (objectToSave, req, res) => {
     }
     return;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     console.log("error from within saveDataToDB");
     if (res) {
       res.status(500).json({ message: "Error saving data to DB" });
