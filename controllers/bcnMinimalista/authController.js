@@ -173,7 +173,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const logout = (req, res) => {
   let refreshToken = req.get("Authorization");
   refreshToken = refreshToken.slice(refreshToken.indexOf(" ") + 1);
-  // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
   refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
   console.log({
     refreshTokens: refreshTokens,

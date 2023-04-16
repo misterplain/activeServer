@@ -3,16 +3,19 @@ const schedule = require("node-schedule");
 const nodeCron = require("node-cron");
 
 function keepServerActive() {
-
   nodeCron.schedule("*/12 * * * *", function logUpdateToServer() {
-    // Do whatever you want in here. Send email, Make  database backup or download data.
     try {
-      axios.post(
-        "https://activeserver.onrender.com/log"
-      );
-    //   console.log("res", res);
+      axios.post("https://activeserver.onrender.com/log");
     } catch (error) {
-      console.log(error.message);
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
     }
   });
 }

@@ -6,7 +6,6 @@ const asyncHandler = require("express-async-handler");
 // @access  Public
 const logServerRefresh = asyncHandler(async (req, res) => {
   let date = new Date();
-  //   const { name, message } = req.body;
 
   const log = await Log.create({
     date,

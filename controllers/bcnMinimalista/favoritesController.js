@@ -41,35 +41,10 @@ const addFavorite = asyncHandler(async (req, res) => {
       id: req.params.blogId,
     });
   }
-  // console.log(req.user);
-  // try {
-  //   const user = await User.findOne(req.user);
-  //   const user = req.user._id
-  //   console.log(user);
-  //   const blog = await Blog.findById(req.params.blogId);
-  //   console.log(blog);
-  //   if (user.favorites.includes(blog._id)) {
-  //     res.status(400).send({
-  //       error: "already blog favourited",
-  //     });
-  //   } else {
-  //     user.favorites.push(blog);
-  //     await user.save();
-  //     res.status(200).send({
-  //       message: "blog favourite successfully",
-  //       blogId: blog._id,
-  //     });
-  //   }
-  // } catch (err) {
-  //   console.error("add favorite controller", err.message);
-  //   res.status(500).send({ error: "unexpected error occured" });
-  // }
 });
 
 const deleteFavorite = asyncHandler(async (req, res) => {
   console.log("delete favorite controller accessed");
-  // console.log(req.user.favorites);
-  // console.log(req.params.blogId);
 
   try {
     const favorites = req.user.favorites;

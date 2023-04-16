@@ -33,41 +33,10 @@ const getJoke = async () => {
   }
 };
 
-// const getHoroscope = async (signHS) => {
-//   const options = {
-//     method: "POST",
-//     url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
-//     params: { sign: `${signHS}`, day: "today" },
-//     headers: {
-//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-//       "X-RapidAPI-Host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-//     },
-//   };
-//   // const errorMessage = "Error in fetching data";
-//   try {
-//     let response = await axios.request(options);
-//     if (response.status >= 200 && response.status < 300) {
-//       console.log("success");
-//       return response.data.description;
-//     } else {
-//       console.log("success");
-//       return errorMessage;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return errorMessage;
-//   }
-// };
-
 const getHoroscope = async (signHS) => {
   const options = {
     method: "GET",
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
-    // params: {sign: `${signHS}`, day: 'today', lang: 'en', period: 'day'},
-    // headers: {
-    //   'X-RapidAPI-Key': '0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95',
-    //   'X-RapidAPI-Host': 'horoskopos.p.rapidapi.com'
-    // }
   };
   try {
     let response = await axios.request(options);
@@ -193,84 +162,6 @@ const getNews = async () => {
   }
 };
 
-// @desc    fetch data
-// @route   get /api/data
-// @access  Public
-// const fetchData = asyncHandler(async (req, res) => {
-//   let time = new Date();
-//   let fetchedDataObject = {};
-//   fetchedDataObject.date = time;
-//   fetchedDataObject.horoscope = {};
-//   const horoscopeData = {};
-
-//   setTimeout(async () => {
-//     ///first API call - joke
-//     fetchedDataObject.joke = await getJoke();
-//     setTimeout(async () => {
-//       // second API call - horoscopes
-//       const horoscopeSigns = [
-//         "aquarius",
-//         "pisces",
-//         "aries",
-//         "taurus",
-//         "gemini",
-//         "cancer",
-//         "leo",
-//         "virgo",
-//         "libra",
-//         "scorpio",
-//         "sagittarius",
-//         "capricorn",
-//       ];
-//       {
-//         horoscopeSigns.map((sign) => {
-//           setTimeout(async () => {
-//             getHoroscope(sign)
-//               .then((data) => {
-//                 console.log(data);
-//                 horoscopeData[sign] = data;
-//                 fetchedDataObject.horoscope = horoscopeData;
-//                 console.log("fetchedData".horoscope);
-//               })
-//               .catch((error) => {
-//                 console.log(error);
-//               });
-//           }, 3000); // delay of 3 seconds
-//         });
-//       }
-//       setTimeout(async () => {
-//         //third api call - moon phase
-//         fetchedDataObject.moonPhase = await getMoonPhase();
-//         setTimeout(async () => {
-//           //fourth api call - weather
-//           fetchedDataObject.forecast = await getForecast();
-//           setTimeout(async () => {
-//             //fifth API call - get news
-//             fetchedDataObject.news = await getNews();
-//             setTimeout(async () => {
-//               console.log("fetchedData");
-//               setTimeout(async () => {
-//                 console.log("fetchedData");
-//                 setTimeout(async () => {
-//                   console.log("fetchedData");
-//                   setTimeout(async () => {
-//                     console.log("fetchedData");
-//                     setTimeout(async () => {
-//                       console.log("fetchedData");
-//                       setTimeout(async () => {
-//                         saveDataToDB(fetchedDataObject);
-//                       }, 3000);
-//                     }, 3000);
-//                   }, 3000);
-//                 }, 3000);
-//               }, 3000);
-//             }, 3000);
-//           }, 3000);
-//         }, 3000);
-//       }, 3000); // delay of 3 seconds
-//     }, 3000); // delay of 3 seconds
-//   }, 3000); // delay of 3 seconds
-// });
 
 const fetchData = asyncHandler(async (req, res) => {
   let time = new Date();
@@ -354,45 +245,6 @@ const saveDataToDB = async (objectToSave, req, res) => {
   }
 };
 
-// newData.save((error) => {
-//   if (error) {
-//     console.log(error);
-//     console.log("error from within saveDataToDB");
-//   } else {
-//     console.log("saved to db");
-//     console.log(
-//       objectToSave +
-//         "objectToSave successfully saved from within saveDataToDB"
-//     );
-//     console.log(
-//       newData + "newData successfully saved from within saveDataToDB"
-//     );
-//     res.status(200).json({ message: "Data saved to DB" })
-//   }
-// });
-
-// const saveDataToDB = async (objectToSave, req, res) => {
-//   let time = new Date();
-
-//   newData.save((error, newData) => {
-//     if (error) {
-//       console.log(error);
-//       console.log("error from within saveDataToDB")
-//     } else {
-//       console.log("saved to db");
-//       console.log(objectToSave + "objectToSave from within saveDataToDB");
-//       console.log(newData + "newData from within saveDataToDB");
-//     }
-//     const newData = new Data({
-//       date: time,
-//       horoscope: objectToSave.horoscope,
-//       joke: objectToSave.joke,
-//       moonPhase: objectToSave.moonPhase,
-//       forecast: objectToSave.forecast,
-//       news: objectToSave.news
-//     });
-//   });
-// };
 
 // @desc    fetch data
 // @route   get /api/data
@@ -420,18 +272,7 @@ const getDataByDate = asyncHandler(async (req, res) => {
   }
 });
 
-//create function to delete all data f
-// const deleteAllData = asyncHandler(async (req, res) => {
-//   try {
-//     const data = await Data.deleteMany({});
-//     res.json(data);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).end();
-//   }
-// });
-
-//create function to delete all data from before february 8th, 2023
+//function to delete all data from before february 12th, 2023
 const deleteAllData = asyncHandler(async (req, res) => {
   console.log("deleteAllData");
 

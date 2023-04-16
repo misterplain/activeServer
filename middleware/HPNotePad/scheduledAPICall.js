@@ -5,16 +5,18 @@ const connectDB = require("../../config/connectDB");
 
 function scheduledAPICall() {
   nodeCron.schedule("0 7 * * * ", function logUpdateToServer() {
-    // setTimeout(() => {
-    //   connectDB();
-    //   console.log("connected to DB - scheduledAPICall - Notepad")
-    // }, 1000);
-    // Do whatever you want in here. Send email, Make  database backup or download data.
     try {
       axios.post("https://activeserver.onrender.com/notepad/data");
-      //   console.log("res", res);
     } catch (error) {
-      console.log(error)
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
       console.log("error within scheduledAPICall");
     }
   });

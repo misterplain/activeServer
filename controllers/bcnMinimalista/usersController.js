@@ -17,9 +17,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
 
 const getUserDetails = asyncHandler(async (req, res) => {
   console.log("getUserDetails accessed");
-  //make sure cookies exist
- 
-
     res.json(req.user);
 
 });
