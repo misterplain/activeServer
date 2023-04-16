@@ -16,7 +16,7 @@ const logServerRefresh = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid log data");
   } else {
-    console.log("log created every 14 minutes");
+    console.log("log created every 12 minutes");
   }
 
   const createdLog = await log.save();

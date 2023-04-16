@@ -4,7 +4,7 @@ const nodeCron = require("node-cron");
 
 function keepServerActive() {
 
-  nodeCron.schedule("*/14 * * * *", function logUpdateToServer() {
+  nodeCron.schedule("*/12 * * * *", function logUpdateToServer() {
     // Do whatever you want in here. Send email, Make  database backup or download data.
     try {
       axios.post(

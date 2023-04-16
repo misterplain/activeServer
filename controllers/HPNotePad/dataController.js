@@ -61,7 +61,7 @@ const getJoke = async () => {
 
 const getHoroscope = async (signHS) => {
   const options = {
-    method: 'GET',
+    method: "GET",
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
     // params: {sign: `${signHS}`, day: 'today', lang: 'en', period: 'day'},
     // headers: {
@@ -83,7 +83,6 @@ const getHoroscope = async (signHS) => {
     return errorMessage;
   }
 };
-
 
 //third api call - moonphase
 const getMoonPhase = async () => {
@@ -190,7 +189,7 @@ const getNews = async () => {
     }
   } catch (error) {
     console.log(error);
-    return error;
+    return errorMessage;
   }
 };
 
@@ -338,44 +337,39 @@ const saveDataToDB = async (objectToSave, req, res) => {
     forecast: objectToSave.forecast,
     news: objectToSave.news,
   });
-  // newData.save((error) => {
-  //   if (error) {
-  //     console.log(error);
-  //     console.log("error from within saveDataToDB");
-  //   } else {
-  //     console.log("saved to db");
-  //     console.log(
-  //       objectToSave +
-  //         "objectToSave successfully saved from within saveDataToDB"
-  //     );
-  //     console.log(
-  //       newData + "newData successfully saved from within saveDataToDB"
-  //     );
-  //     res.status(200).json({ message: "Data saved to DB" })
-  //   }
-  // });
+
   try {
     await newData.save();
     console.log("saved to db");
-    console.log(
-      objectToSave + "objectToSave successfully saved from within saveDataToDB"
-    );
-    console.log(
-      newData + "newData successfully saved from within saveDataToDB"
-    );
     if (res) {
       res.status(200).json({ message: "Data saved to DB" });
     }
-    return;
+    return res.json({ message: "Data saved to DB" });
   } catch (error) {
-    console.error(error.message);
+    console.log(error.message);
     console.log("error from within saveDataToDB");
-    if (res) {
-      res.status(500).json({ message: "Error saving data to DB" });
-    }
+    res.json({ message: "Error saving data to DB" });
+
     return;
   }
 };
+
+// newData.save((error) => {
+//   if (error) {
+//     console.log(error);
+//     console.log("error from within saveDataToDB");
+//   } else {
+//     console.log("saved to db");
+//     console.log(
+//       objectToSave +
+//         "objectToSave successfully saved from within saveDataToDB"
+//     );
+//     console.log(
+//       newData + "newData successfully saved from within saveDataToDB"
+//     );
+//     res.status(200).json({ message: "Data saved to DB" })
+//   }
+// });
 
 // const saveDataToDB = async (objectToSave, req, res) => {
 //   let time = new Date();
@@ -459,7 +453,5 @@ const deleteAllData = asyncHandler(async (req, res) => {
     res.status(500).end();
   }
 });
-
-
 
 module.exports = { fetchData, getDataByDate, deleteAllData };
