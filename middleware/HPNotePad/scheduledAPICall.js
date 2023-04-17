@@ -4,7 +4,7 @@ const nodeCron = require("node-cron");
 const connectDB = require("../../config/connectDB");
 
 function scheduledAPICall() {
-  nodeCron.schedule("0 7 * * * ", function logUpdateToServer() {
+  nodeCron.schedule("0 6 * * * ", function logUpdateToServer() {
     try {
       axios.post("https://activeserver.onrender.com/notepad/data");
     } catch (error) {
