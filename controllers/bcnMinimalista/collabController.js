@@ -35,7 +35,7 @@ const sendCollab = asyncHandler(async (req, res) => {
   smtpTransport.sendMail(mailOptions, (error, response) => {
     try {
       if (error) {
-        console.log(error);
+        console.log(error.message);
         res.status(400).json({ message: "Error sending email" });
       } else {
         console.log(response);

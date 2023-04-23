@@ -12,6 +12,7 @@ const getJoke = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
     },
+    timeout: 10000, // 10 seconds
   };
 
   try {
@@ -28,7 +29,7 @@ const getJoke = async () => {
       return errorMessage;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return errorMessage;
   }
 };
@@ -37,6 +38,7 @@ const getHoroscope = async (signHS) => {
   const options = {
     method: "GET",
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
+    timeout: 10000, // 10 seconds
   };
   try {
     let response = await axios.request(options);
@@ -48,7 +50,7 @@ const getHoroscope = async (signHS) => {
       return errorMessage;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return errorMessage;
   }
 };
@@ -65,6 +67,7 @@ const getMoonPhase = async () => {
       "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
+    timeout: 10000, // 10 seconds
   };
 
   try {
@@ -81,7 +84,7 @@ const getMoonPhase = async () => {
       return errorMessage;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return errorMessage;
   }
 };
@@ -95,6 +98,7 @@ const getForecast = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "forecast9.p.rapidapi.com",
     },
+    timeout: 10000, // 10 seconds
   };
 
   try {
@@ -114,7 +118,7 @@ const getForecast = async () => {
       return errorMessage;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return errorMessage;
   }
 };
@@ -135,6 +139,7 @@ const getNews = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
     },
+    timeout: 10000, // 10 seconds
   };
 
   try {
@@ -157,11 +162,10 @@ const getNews = async () => {
       return errorMessage;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     return errorMessage;
   }
 };
-
 
 const fetchData = asyncHandler(async (req, res) => {
   let time = new Date();
@@ -244,7 +248,6 @@ const saveDataToDB = async (objectToSave, req, res) => {
   }
 };
 
-
 // @desc    fetch data
 // @route   get /api/data
 // @access  Public
@@ -266,7 +269,7 @@ const getDataByDate = asyncHandler(async (req, res) => {
     }
   } catch (error) {
     // console.error(ERROR getting data for date: ${date});
-    console.log(error);
+    console.log(error.message);
     res.status(500).end();
   }
 });
@@ -288,7 +291,7 @@ const deleteAllData = asyncHandler(async (req, res) => {
     res.json(data);
     console.log("data deleted");
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
 
     res.status(500).end();
   }
