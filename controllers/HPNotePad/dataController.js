@@ -276,7 +276,7 @@ const fetchData = asyncHandler(async (req, res) => {
       horoscopeSigns.map(async (sign) => await getHoroscope(sign))
     ).catch((error) => {
       console.error("Error fetching horoscopes:", error);
-      // Handle the error, e.g., by returning a default value or an error message
+      return errorMessage;
     });
 
     // Check if horoscopes were fetched successfully
@@ -294,7 +294,7 @@ const fetchData = asyncHandler(async (req, res) => {
     saveDataToDB(fetchedDataObject);
   } catch (error) {
     console.error("Error in fetchData:", error);
-    // Handle the error, e.g., by returning an error message or setting a default value
+    return errorMessage;
   }
 });
 
@@ -321,6 +321,7 @@ const saveDataToDB = async (objectToSave, req, res) => {
   } catch (error) {
     console.log(error.message);
     console.log("error from within saveDataToDB");
+    return errorMessage;
 
     return;
   }
