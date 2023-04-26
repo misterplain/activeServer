@@ -12,7 +12,7 @@ const getJoke = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
     },
-    timeout: 10000, // 10 seconds
+    timeout: 100000, // 100 seconds
   };
 
   try {
@@ -38,7 +38,7 @@ const getHoroscope = async (signHS) => {
   const options = {
     method: "GET",
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
-    timeout: 10000, // 10 seconds
+    timeout: 100000, // 100 seconds
   };
   try {
     let response = await axios.request(options);
@@ -67,7 +67,7 @@ const getMoonPhase = async () => {
       "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
-    timeout: 10000, // 10 seconds
+    timeout: 100000, // 100 seconds
   };
 
   try {
@@ -98,7 +98,7 @@ const getForecast = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "forecast9.p.rapidapi.com",
     },
-    timeout: 10000, // 10 seconds
+    timeout: 100000, // 100 seconds
   };
 
   try {
@@ -139,7 +139,7 @@ const getNews = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
     },
-    timeout: 10000, // 10 seconds
+    timeout: 100000, // 100 seconds
   };
 
   try {
@@ -167,57 +167,135 @@ const getNews = async () => {
   }
 };
 
+// const fetchData = asyncHandler(async (req, res) => {
+//   let time = new Date();
+//   let fetchedDataObject = {};
+//   fetchedDataObject.date = time;
+//   fetchedDataObject.horoscope = {};
+//   const horoscopeData = {};
+
+//   const [joke, moonPhase, forecast, news] = await Promise.all([
+//     getJoke(),
+//     getMoonPhase(),
+//     getForecast(),
+//     getNews(),
+//   ]);
+
+//   //assign jokes data
+//   fetchedDataObject.joke = joke;
+
+//   //assign moonPhase data
+//   fetchedDataObject.moonPhase = moonPhase;
+
+//   //assign forecast data
+//   fetchedDataObject.forecast = forecast;
+
+//   //assign news data
+//   fetchedDataObject.news = news;
+
+//   //assign horoscopes data
+//   const horoscopeSigns = [
+//     "aquarius",
+//     "pisces",
+//     "aries",
+//     "taurus",
+//     "gemini",
+//     "cancer",
+//     "leo",
+//     "virgo",
+//     "libra",
+//     "scorpio",
+//     "sagittarius",
+//     "capricorn",
+//   ];
+//   const results = await Promise.all(
+//     horoscopeSigns.map(async (sign) => await getHoroscope(sign))
+//   );
+//   results.forEach((result, index) => {
+//     horoscopeData[horoscopeSigns[index]] = result;
+//   });
+//   fetchedDataObject.horoscope = horoscopeData;
+
+//   //save data to db
+//   saveDataToDB(fetchedDataObject);
+// });
+
 const fetchData = asyncHandler(async (req, res) => {
-  let time = new Date();
-  let fetchedDataObject = {};
-  fetchedDataObject.date = time;
-  fetchedDataObject.horoscope = {};
-  const horoscopeData = {};
+  try {
+    let time = new Date();
+    let fetchedDataObject = {};
+    fetchedDataObject.date = time;
+    fetchedDataObject.horoscope = {};
+    const horoscopeData = {};
 
-  const [joke, moonPhase, forecast, news] = await Promise.all([
-    getJoke(),
-    getMoonPhase(),
-    getForecast(),
-    getNews(),
-  ]);
+    const [joke, moonPhase, forecast, news] = await Promise.all([
+      getJoke(),
+      getMoonPhase(),
+      getForecast(),
+      getNews(),
+    ]).catch((error) => {
+      console.error("Error fetching data:", error);
+      // Handle the error, e.g., by returning a default value or an error message
+    });
 
-  //assign jokes data
-  fetchedDataObject.joke = joke;
+    // Check if data was fetched successfully
+    if (!joke || !moonPhase || !forecast || !news) {
+      // Handle the case when one or more data fetches failed
+      console.log("Error fetching data joke or moonphase or forecast or news");
+      return;
+    }
 
-  //assign moonPhase data
-  fetchedDataObject.moonPhase = moonPhase;
+    //assign jokes data
+    fetchedDataObject.joke = joke;
 
-  //assign forecast data
-  fetchedDataObject.forecast = forecast;
+    //assign moonPhase data
+    fetchedDataObject.moonPhase = moonPhase;
 
-  //assign news data
-  fetchedDataObject.news = news;
+    //assign forecast data
+    fetchedDataObject.forecast = forecast;
 
-  //assign horoscopes data
-  const horoscopeSigns = [
-    "aquarius",
-    "pisces",
-    "aries",
-    "taurus",
-    "gemini",
-    "cancer",
-    "leo",
-    "virgo",
-    "libra",
-    "scorpio",
-    "sagittarius",
-    "capricorn",
-  ];
-  const results = await Promise.all(
-    horoscopeSigns.map(async (sign) => await getHoroscope(sign))
-  );
-  results.forEach((result, index) => {
-    horoscopeData[horoscopeSigns[index]] = result;
-  });
-  fetchedDataObject.horoscope = horoscopeData;
+    //assign news data
+    fetchedDataObject.news = news;
 
-  //save data to db
-  saveDataToDB(fetchedDataObject);
+    //assign horoscopes data
+    const horoscopeSigns = [
+      "aquarius",
+      "pisces",
+      "aries",
+      "taurus",
+      "gemini",
+      "cancer",
+      "leo",
+      "virgo",
+      "libra",
+      "scorpio",
+      "sagittarius",
+      "capricorn",
+    ];
+    const results = await Promise.all(
+      horoscopeSigns.map(async (sign) => await getHoroscope(sign))
+    ).catch((error) => {
+      console.error("Error fetching horoscopes:", error);
+      // Handle the error, e.g., by returning a default value or an error message
+    });
+
+    // Check if horoscopes were fetched successfully
+    if (!results || results.length !== horoscopeSigns.length) {
+     console.log("Error fetching horoscopes")
+      return;
+    }
+
+    results.forEach((result, index) => {
+      horoscopeData[horoscopeSigns[index]] = result;
+    });
+    fetchedDataObject.horoscope = horoscopeData;
+
+    //save data to db
+    saveDataToDB(fetchedDataObject);
+  } catch (error) {
+    console.error("Error in fetchData:", error);
+    // Handle the error, e.g., by returning an error message or setting a default value
+  }
 });
 
 const saveDataToDB = async (objectToSave, req, res) => {
