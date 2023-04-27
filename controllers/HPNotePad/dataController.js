@@ -235,7 +235,6 @@ const fetchData = asyncHandler(async (req, res) => {
       getNews(),
     ]).catch((error) => {
       console.error("Error fetching data:", error);
-      // Handle the error, e.g., by returning a default value or an error message
     });
 
     // Check if data was fetched successfully
@@ -281,7 +280,7 @@ const fetchData = asyncHandler(async (req, res) => {
 
     // Check if horoscopes were fetched successfully
     if (!results || results.length !== horoscopeSigns.length) {
-     console.log("Error fetching horoscopes")
+      console.log("Error fetching horoscopes");
       return;
     }
 
@@ -298,9 +297,9 @@ const fetchData = asyncHandler(async (req, res) => {
   }
 });
 
-const saveDataToDB = async (objectToSave, req, res) => {
+const saveDataToDB = async (objectToSave) => {
   let time = new Date();
-  console.log(objectToSave + "objectToSave from within saveDataToDB");
+  console.log(objectToSave, "objectToSave from within saveDataToDB");
 
   const newData = new Data({
     date: time,
@@ -314,16 +313,10 @@ const saveDataToDB = async (objectToSave, req, res) => {
   try {
     await newData.save();
     console.log("saved to db");
-    if (res) {
-      res.status(200).json({ message: "Data saved to DB" });
-    }
-    return res.json({ message: "Data saved to DB" });
+    return { success: true, message: "Data saved to DB" };
   } catch (error) {
-    console.log(error.message);
-    console.log("error from within saveDataToDB");
-    return errorMessage;
-
-    return;
+    console.error("Error in saveDataToDB:", error.message);
+    return { success: false, message: "Error saving data to DB" };
   }
 };
 
