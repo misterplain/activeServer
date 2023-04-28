@@ -228,9 +228,10 @@ const fetchData = asyncHandler(async (req, res) => {
     fetchedDataObject.horoscope = {};
     const horoscopeData = {};
 
-    const [joke, moonPhase, forecast, news] = await Promise.all([
+    //    const [joke, moonPhase, forecast, news] = await Promise.all([
+    const [joke, forecast, news] = await Promise.all([
       getJoke(),
-      getMoonPhase(),
+      // getMoonPhase(),
       getForecast(),
       getNews(),
     ]).catch((error) => {
@@ -238,7 +239,7 @@ const fetchData = asyncHandler(async (req, res) => {
     });
 
     // Check if data was fetched successfully
-    if (!joke || !moonPhase || !forecast || !news) {
+    if (!joke  || !forecast || !news) {
       // Handle the case when one or more data fetches failed
       console.log("Error fetching data joke or moonphase or forecast or news");
       return;
@@ -248,7 +249,7 @@ const fetchData = asyncHandler(async (req, res) => {
     fetchedDataObject.joke = joke;
 
     //assign moonPhase data
-    fetchedDataObject.moonPhase = moonPhase;
+    // fetchedDataObject.moonPhase = moonPhase;
 
     //assign forecast data
     fetchedDataObject.forecast = forecast;
@@ -305,7 +306,7 @@ const saveDataToDB = async (objectToSave) => {
     date: time,
     horoscope: objectToSave.horoscope,
     joke: objectToSave.joke,
-    moonPhase: objectToSave.moonPhase,
+    // moonPhase: objectToSave.moonPhase,
     forecast: objectToSave.forecast,
     news: objectToSave.news,
   });
