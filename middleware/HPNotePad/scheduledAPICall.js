@@ -3,8 +3,10 @@ const schedule = require("node-schedule");
 const nodeCron = require("node-cron");
 const connectDB = require("../../config/connectDB");
 
+
+//7.30 api call will actually call this at 9.30am Barcelona time 
 function scheduledAPICall() {
-  nodeCron.schedule("30 7 * * * ", function logUpdateToServer() {
+  nodeCron.schedule("30 6 * * * ", function logUpdateToServer() {
     try {
       axios.post("https://activeserver.onrender.com/notepad/data");
     } catch (error) {
