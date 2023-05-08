@@ -282,3 +282,6 @@
 20230428	07:32:00	29925098-9c5b-451e-aaa9-8ea0c6557f00	POST	/notepad/data	undefined
 20230428	07:34:00	a794915f-dfdf-4652-822d-6ba6a5fd30f9	POST	/notepad/data	undefined
 20230428	07:35:00	8cc6dd5e-6efb-44fc-b5e8-a1eebdf482af	POST	/notepad/data	undefined
+20230508	13:56:37	7f09529c-47d7-43f4-abab-130b346d15d1	GET	/fantasticfy/data/products	http://localhost:3000
+20230508	13:57:48	cf95ba70-e95a-48aa-b427-59e213b92df9	GET	/fantasticfy/data/products	http://localhost:3000
+20230508	13:58:34	3f6d547b-0f6f-4a40-957e-7efe82bd6c77	GET	/fantasticfy/data/products	http://localhost:3000

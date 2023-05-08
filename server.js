@@ -25,17 +25,8 @@ const favoritesRoutes = require("./routes/bcnMinimalista/favoritesRoutes");
 const commentsRoutes = require("./routes/bcnMinimalista/commentsRoutes");
 //porfolio routes
 const contactPortfolioRoute = require("./routes/portfolio/contactRoute");
-//boilerplate
-// const authBPRoutes = require("./routes/boilerPlate/authRoutes");
-// const blogBPRoutes = require("./routes/boilerPlate/blogsRoutes");
-// const collabBPRoutes = require("./routes/boilerPlate/collabRoutes");
-// const commentsBPRoutes = require("./routes/boilerPlate/commentsRoutes");
-// const favoritesBPRoutes = require("./routes/boilerPlate/favoritesRoutes");
-// const logoutBPRoutes = require("./routes/boilerPlate/logoutRoutes");
-// const refreshBPRoutes = require("./routes/boilerPlate/refreshRoutes");
-// const registerBPRoutes = require("./routes/boilerPlate/registerRoutes");
-// const usersBPRoutes = require("./routes/boilerPlate/usersRoutes");
-
+//fantasticfy
+const fetchDataRoute = require("./routes/fantasticfy/fetchDataRoute");
 const app = express();
 
 //Connect to Mongo DB
@@ -78,16 +69,8 @@ app.use("/bcnmin/comments", commentsRoutes);
 //portfolio
 app.use("/portfolio/contact", contactPortfolioRoute);
 
-//boilerplate
-// app.use("/boilerplate/users", usersBPRoutes);
-// app.use("/boilerplate/auth", authBPRoutes);
-// app.use("/boilerplate/register", registerBPRoutes);
-// app.use("/boilerplate/refresh", refreshBPRoutes);
-// app.use("/boilerplate/logout", logoutBPRoutes);
-// app.use("/boilerplate/blogs", blogBPRoutes);
-// app.use("/boilerplate/collab", collabBPRoutes);
-// app.use("/boilerplate/favorites", favoritesBPRoutes);
-// app.use("/boilerplate/comments", commentsBPRoutes);
+//fantasticfy
+app.use("/fantasticfy/data", fetchDataRoute);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`server listing to port 5000 only`));
