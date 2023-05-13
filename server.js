@@ -4,29 +4,29 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 //middleware
-const keepServerActive = require("./middleware/keepServerActive");
-const scheduledAPICall = require("./middleware/HPNotePad/scheduledAPICall");
+const keepServerActive = require("./keepServerActive");
+const scheduledAPICall = require("./HPNotePad//middleware/scheduledAPICall");
 const { logger } = require("./middleware/logger");
 const { logEvents } = require("./middleware/logger");
 //config
 const connectDB = require("./config/connectDB");
 //notepad routes
-const contactRoute = require("./routes/HPNotePad/contactRoute");
-const logRoute = require("./routes/HPNotePad/logRoute");
-const dataRoute = require("./routes/HPNotePad/dataRoute");
+const contactRoute = require("./HPNotePad/routes/contactRoute");
+const logRoute = require("./HPNotePad/routes/logRoute");
+const dataRoute = require("./HPNotePad/routes/dataRoute");
 //bcnMinmalista routes
-const usersRoutes = require("./routes/bcnMinimalista/usersRoutes");
-const authRoutes = require("./routes/bcnMinimalista/authRoutes");
-const refreshRoutes = require("./routes/bcnMinimalista/refreshRoutes");
-const logoutRoutes = require("./routes/bcnMinimalista/logoutRoutes");
-const blogsRoutes = require("./routes/bcnMinimalista/blogsRoutes");
-const collabRoutes = require("./routes/bcnMinimalista/collabRoutes");
-const favoritesRoutes = require("./routes/bcnMinimalista/favoritesRoutes");
-const commentsRoutes = require("./routes/bcnMinimalista/commentsRoutes");
+const usersRoutes = require("./bcnMinimalista/routes/usersRoutes");
+const authRoutes = require("./bcnMinimalista/routes/authRoutes");
+const refreshRoutes = require("./bcnMinimalista/routes/refreshRoutes");
+const logoutRoutes = require("./bcnMinimalista/routes/logoutRoutes");
+const blogsRoutes = require("./bcnMinimalista/routes/blogsRoutes");
+const collabRoutes = require("./bcnMinimalista/routes/collabRoutes");
+const favoritesRoutes = require("./bcnMinimalista/routes/favoritesRoutes");
+const commentsRoutes = require("./bcnMinimalista/routes/commentsRoutes");
 //porfolio routes
-const contactPortfolioRoute = require("./routes/portfolio/contactRoute");
+const contactPortfolioRoute = require("./portfolio/routes/contactRoute");
 //fantasticfy
-const fetchDataRoute = require("./routes/fantasticfy/fetchDataRoute");
+const fetchDataRoute = require("./Fantasticfy/routes/fetchDataRoute");
 const app = express();
 
 //Connect to Mongo DB
