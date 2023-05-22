@@ -3,7 +3,7 @@ const schedule = require("node-schedule");
 const nodeCron = require("node-cron");
 
 function keepServerActive() {
-  nodeCron.schedule("*/12 * * * *", function logUpdateToServer() {
+  nodeCron.schedule("*/10 * * * *", function logUpdateToServer() {
     try {
       axios.post("https://activeserver.onrender.com/log");
     } catch (error) {
