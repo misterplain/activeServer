@@ -6,7 +6,8 @@ function keepServerActive() {
   nodeCron.schedule("*/10 * * * *", async function logUpdateToServer() {
     console.log("Scheduling a new log update.");
     try {
-      await axios.post("https://activeserver.onrender.com/log");
+      // await axios.post("https://activeserver.onrender.com/log");
+      await axios.post("https://cute-gray-pelican-tux.cyclic.app/log");
       // await axios.post("http://localhost:5000/log");
       console.log("Log update sent.");
     } catch (error) {

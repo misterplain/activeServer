@@ -8,7 +8,8 @@ const nodeCron = require("node-cron");
 function scheduledAPICall() {
   nodeCron.schedule("0 6 * * * ", function logUpdateToServer() {
     try {
-      axios.post("https://activeserver.onrender.com/notepad/data");
+      // axios.post("https://activeserver.onrender.com/notepad/data");
+      axios.post("https://cute-gray-pelican-tux.cyclic.app/notepad/data");
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
