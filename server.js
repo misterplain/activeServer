@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 //middleware
-const keepServerActive = require("./keepServerActive");
-const scheduledAPICall = require("./HPNotePad/middleware/scheduledAPICall");
+// const keepServerActive = require("./keepServerActive");
+// const scheduledAPICall = require("./HPNotePad/middleware/scheduledAPICall");
 const { logger } = require("./middleware/logger");
 const { logEvents } = require("./middleware/logger");
 //config
@@ -48,11 +48,11 @@ app.use(express.json());
 app.use(cors());
 
 //keep server active
-keepServerActive();
+// keepServerActive();
 app.use("/log", logRoute);
 
 //notepad
-scheduledAPICall();
+// scheduledAPICall();
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
 
