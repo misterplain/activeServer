@@ -10,6 +10,10 @@ const { logger } = require("./middleware/logger");
 const { logEvents } = require("./middleware/logger");
 //config
 const connectDB = require("./config/connectDB");
+//boilerPlate
+const cookieSession = require("cookie-session");
+const session = require("express-session");
+const passportSetup = require("./boilerPlate/passport");
 //notepad routes
 const contactRoute = require("./HPNotePad/routes/contactRoute");
 const logRoute = require("./HPNotePad/routes/logRoute");
@@ -27,10 +31,36 @@ const commentsRoutes = require("./bcnMinimalista/routes/commentsRoutes");
 const contactPortfolioRoute = require("./portfolio/routes/contactRoute");
 //fantasticfy
 const fetchDataRoute = require("./Fantasticfy/routes/fetchDataRoute");
+const passport = require("passport");
 const app = express();
+//boilerPlate routes
+const authRoutesBoilerPlate = require("./boilerPlate/routes/auth");
 
 //Connect to Mongo DB
 connectDB();
+
+//boilerPlate cookie sessions and passport library
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: ["privateKey"],
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//   })
+// );
+//express-sessions attempt
+app.use(
+  session({
+    secret: "privateKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //custom middleware logger
 app.use(logger);
@@ -45,7 +75,30 @@ mongoose.connection.on("error", (err) => {
 app.use("/", express.static(path.resolve(path.join(__dirname, "./build"))));
 
 app.use(express.json());
-app.use(cors());
+const whitelist = [
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "https://hpnotepad.onrender.com",
+  "https://fantasticfy.onrender.com",
+  "https://patrickobrien.onrender.com",
+  "https://bcnminimalista.onrender.com",
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      console.log('Origin: ', origin); // Log the origin
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
+app.use(express.urlencoded({ extended: true }));
 
 //keep server active
 // keepServerActive();
@@ -71,6 +124,9 @@ app.use("/portfolio/contact", contactPortfolioRoute);
 
 //fantasticfy
 app.use("/fantasticfy/data", fetchDataRoute);
+
+//boilerPlate
+app.use("/auth", authRoutesBoilerPlate);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`server listing to port 5000 only`));
