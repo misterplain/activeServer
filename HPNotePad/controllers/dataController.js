@@ -338,10 +338,9 @@ const getDataByDate = asyncHandler(async (req, res) => {
       res.json(data);
     } else {
       console.log("no data for this date");
-      res.status(404).json({ message: "No data for this date" }).end();
+      res.json({ message: "No data for this date" });
     }
   } catch (error) {
-    // console.error(ERROR getting data for date: ${date});
     console.log(error.message);
     res.status(500).end();
   }
