@@ -6,9 +6,8 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-
-console.log("GOOGLE_CLIENT_ID", GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET", GOOGLE_CLIENT_SECRET);
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 passport.use(
   new GoogleStrategy(
@@ -17,12 +16,38 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
     },
-    //it is within this function that you can create a callback function (done) becomes a different callback function to search the database for the user etc. 
+    //it is within this function that you can create a callback function (done) becomes a different callback function to search the database for the user etc.
     function (accessToken, refreshToken, profile, done) {
       done(null, profile);
     }
   )
 );
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      callbackURL: "/auth/github/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      done(null, profile);
+    }
+  )
+);
+
+// passport.use(
+//     new FacebookStrategy(
+//       {
+//         clientID: FACEBOOK_APP_ID,
+//         clientSecret: FACEBOOK_APP_SECRET,
+//         callbackURL: "/auth/facebook/callback",
+//       },
+//       function (accessToken, refreshToken, profile, done) {
+//         done(null, profile);
+//       }
+//     )
+//   );
 
 //to pass the user data to the session you need to serialize and deserialize the user
 passport.serializeUser((user, done) => {
