@@ -75,6 +75,9 @@ const dataSchema = new Schema({
       type: String,
       // required: true,
     },
+    fullMoon: {
+      type: Number
+    }
   },
   forecast: [
     {

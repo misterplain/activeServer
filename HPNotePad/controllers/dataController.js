@@ -57,34 +57,51 @@ const getHoroscope = async (signHS) => {
 
 //third api call - moonphase
 const getMoonPhase = async () => {
+  // const options = {
+  //   method: "GET",
+  //   url: "https://moon-phase.p.rapidapi.com/moon_phase/",
+  //   headers: {
+  //     // gmail key
+  //     // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+  //     // yahoo key
+  //     "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+  //     "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
+  //   },
+  //   // timeout: 100000, // 100 seconds
+  // };
   const options = {
     method: "GET",
-    url: "https://moon-phase.p.rapidapi.com/moon_phase/",
+    url: "https://moon-phase.p.rapidapi.com/basic",
     headers: {
-      // gmail key
-      // "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-      // yahoo key
-      "X-RapidAPI-Key": "6055e6d211mshaddfa5288b1aaffp1a1b1ajsnbc9b8ca2a7a6",
+      "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
     },
-    timeout: 100000, // 100 seconds
   };
 
   try {
     let response = await axios.request(options);
     if (response.status >= 200 && response.status < 300) {
-      console.log("success");
+      console.log({
+        message: "moonphase success error code",
+        response: response,
+      })
       const moonphaseData = {
-        mainText: response.data.mainText,
-        emoji: response.data.emoji,
+        mainText: response.data.phase_name,
+        fullMoon: response.data.days_until_next_full_moon,
       };
       return moonphaseData;
     } else {
-      console.log("success");
+      console.log({
+        message: "moonphase error code not 200 or 300",
+        response: response,
+      })
       return errorMessage;
     }
   } catch (error) {
-    console.log(error.message);
+    console.log({
+      message: "catch block moon phase",
+      response: error,
+    })
     return errorMessage;
   }
 };
@@ -123,37 +140,77 @@ const getForecast = async () => {
   }
 };
 
+// const getNews = async () => {
+//   const options = {
+//     method: "GET",
+//     url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
+//     params: {
+//       q: "spain",
+//       pageNumber: "1",
+//       pageSize: "10",
+//       autoCorrect: "true",
+//       fromPublishedDate: "null",
+//       toPublishedDate: "null",
+//     },
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
+//     },
+//     timeout: 100000, // 100 seconds
+//   };
+
+//   try {
+//     let response = await axios.request(options);
+//     if (response.status >= 200 && response.status < 300) {
+//       console.log("success");
+//       const items = response.data.value;
+//       const extractedData = items.slice(0, 5).map((item) => ({
+//         title: item.title,
+//         url: item.url,
+//         description: item.description,
+//         body: item.body,
+//         snippet: item.snippet,
+//         image: item.image.url,
+//       }));
+
+//       return extractedData;
+//     } else {
+//       console.log("success");
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     return errorMessage;
+//   }
+// };
+
 const getNews = async () => {
   const options = {
     method: "GET",
-    url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI",
+    url: "https://cnbc.p.rapidapi.com/news/v2/list-trending",
     params: {
-      q: "spain",
-      pageNumber: "1",
-      pageSize: "10",
-      autoCorrect: "true",
-      fromPublishedDate: "null",
-      toPublishedDate: "null",
+      tag: "Articles",
+      count: "5",
     },
     headers: {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
-      "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
+      "X-RapidAPI-Host": "cnbc.p.rapidapi.com",
     },
-    timeout: 100000, // 100 seconds
   };
 
   try {
     let response = await axios.request(options);
     if (response.status >= 200 && response.status < 300) {
       console.log("success");
-      const items = response.data.value;
+      const items = response.data.data.mostPopularEntries.assets;
+      console.log(response.data);
       const extractedData = items.slice(0, 5).map((item) => ({
-        title: item.title,
+        title: item.shorterHeadline,
         url: item.url,
         description: item.description,
-        body: item.body,
-        snippet: item.snippet,
-        image: item.image.url,
+        body: item.description,
+        snippet: item.description,
+        image: item.promoImage.url,
       }));
 
       return extractedData;
@@ -239,7 +296,7 @@ const fetchData = asyncHandler(async (req, res) => {
     });
 
     // Check if data was fetched successfully
-    if (!joke  || !forecast || !news) {
+    if (!joke || !forecast || !news) {
       // Handle the case when one or more data fetches failed
       console.log("Error fetching data joke or moonphase or forecast or news");
       return;
@@ -327,7 +384,7 @@ const saveDataToDB = async (objectToSave) => {
 
   // Start with a base object with only the date
   let dataToSave = {
-    date: time
+    date: time,
   };
 
   // Add properties conditionally if they exist
