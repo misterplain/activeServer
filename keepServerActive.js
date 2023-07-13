@@ -31,7 +31,7 @@ const nodeCron = require("node-cron");
 // module.exports = keepServerActive;
 
 function keepServerActive() {
-  nodeCron.schedule("0 19 * * * ", async function logUpdateToServer() {
+  nodeCron.schedule("0 20 * * * ", async function logUpdateToServer() {
     console.log("Scheduling a new log update.");
     try {
       // await axios.post("https://activeserver.onrender.com/log");
