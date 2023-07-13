@@ -101,7 +101,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 
 //keep server active
-// keepServerActive();
+keepServerActive();
 app.use("/log", logRoute);
 
 //notepad
