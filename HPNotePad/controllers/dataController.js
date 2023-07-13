@@ -12,7 +12,7 @@ const getJoke = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
     },
-    timeout: 100000, // 100 seconds
+    // timeout: 100000, // 100 seconds
   };
 
   try {
@@ -38,7 +38,7 @@ const getHoroscope = async (signHS) => {
   const options = {
     method: "GET",
     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
-    timeout: 100000, // 100 seconds
+    // timeout: 100000, // 100 seconds
   };
   try {
     let response = await axios.request(options);
@@ -115,7 +115,7 @@ const getForecast = async () => {
       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
       "X-RapidAPI-Host": "forecast9.p.rapidapi.com",
     },
-    timeout: 100000, // 100 seconds
+    // timeout: 100000, // 100 seconds
   };
 
   try {
