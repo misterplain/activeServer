@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 //middleware
-// const keepServerActive = require("./keepServerActive");
+const keepServerActive = require("./keepServerActive");
 // const scheduledAPICall = require("./HPNotePad/middleware/scheduledAPICall");
 const { logger } = require("./middleware/logger");
 const { logEvents } = require("./middleware/logger");
