@@ -36,6 +36,10 @@ const app = express();
 //boilerPlate routes
 const authRoutesBoilerPlate = require("./boilerPlate/routes/auth");
 
+//nodecron
+const nodemailer = require("nodemailer");
+const nodeCron = require("node-cron");
+
 //Connect to Mongo DB
 connectDB();
 
@@ -86,11 +90,11 @@ const whitelist = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log('Origin: ', origin); // Log the origin
+      console.log("Origin: ", origin); // Log the origin
       if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true)
+        callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'))
+        callback(new Error("Not allowed by CORS"));
       }
     },
     methods: "GET,POST,PUT,DELETE",
@@ -108,6 +112,66 @@ app.use("/log", logRoute);
 // scheduledAPICall();
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
+
+//nodemailed cyclic 0 downtime test
+
+function nodeMailerConfirmationEmail(source, responseData) {
+  console.log("NodeMailerTest triggered");
+  let date = new Date();
+
+  let smtpTransporter = nodemailer.createTransport({
+    service: "Gmail",
+    port: 465,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
+  let mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: process.env.GMAIL_USER,
+    subject: `nodecronServer - ${source} - triggered at ${date}`,
+    html: `
+    <h3>Successful trigger at ${date}</h3>
+    <h3>Source  ${source}</h3>
+    ${
+      responseData
+        ? `<p>Response data: ${JSON.stringify(responseData)}</p>`
+        : ""
+    }
+
+   `,
+  };
+
+  smtpTransporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.error("Failed to send mail:", error);
+    } else {
+      console.log("Success email sent");
+    }
+  });
+}
+
+// nodeMailerTest()
+//every morning at 7
+function nodeCron1WithConfirmationEmail() {
+  nodeCron.schedule("0 7 * * * ", () => {
+    console.log("NodeCron1 triggered");
+    let date = new Date();
+    nodeMailerConfirmationEmail("nodeCron1");
+  });
+}
+
+//everyminute
+function nodeCron2WithConfirmationEmail() {
+  nodeCron.schedule("*/1 * * * *", () => {
+    console.log("NodeCron2 triggered");
+    let date = new Date();
+    nodeMailerConfirmationEmail("nodeCron2")
+  });
+};
+
+nodeCron1WithConfirmationEmail()
 
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);
