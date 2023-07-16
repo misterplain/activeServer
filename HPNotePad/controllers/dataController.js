@@ -1,6 +1,7 @@
 const Data = require("../models/dataModel");
 const asyncHandler = require("express-async-handler");
 const axios = require("axios");
+const { nodeMailerConfirmationEmail } = require("../../utils/nodeMailer");
 
 const errorMessage = "Error";
 
@@ -84,7 +85,7 @@ const getMoonPhase = async () => {
       console.log({
         message: "moonphase success error code",
         response: response,
-      })
+      });
       const moonphaseData = {
         mainText: response.data.phase_name,
         fullMoon: response.data.days_until_next_full_moon,
@@ -94,14 +95,14 @@ const getMoonPhase = async () => {
       console.log({
         message: "moonphase error code not 200 or 300",
         response: response,
-      })
+      });
       return errorMessage;
     }
   } catch (error) {
     console.log({
       message: "catch block moon phase",
       response: error,
-    })
+    });
     return errorMessage;
   }
 };
@@ -412,6 +413,7 @@ const saveDataToDB = async (objectToSave) => {
   try {
     await newData.save();
     console.log("saved to db");
+    nodeMailerConfirmationEmail("HPNotePad", newData);
     return { success: true, message: "Data saved to DB" };
   } catch (error) {
     console.error("Error in saveDataToDB:", error.message);

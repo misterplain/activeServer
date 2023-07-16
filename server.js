@@ -39,6 +39,7 @@ const authRoutesBoilerPlate = require("./boilerPlate/routes/auth");
 //nodecron
 const nodemailer = require("nodemailer");
 const nodeCron = require("node-cron");
+const nodeMailerRoute = require("./utils/nodeMailer");
 
 //Connect to Mongo DB
 connectDB();
@@ -107,50 +108,14 @@ app.use(express.urlencoded({ extended: true }));
 //keep server active
 keepServerActive();
 app.use("/log", logRoute);
+// app.use("/nodeMailer", nodeMailerRoute);
 
 //notepad
 // scheduledAPICall();
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
 
-//nodemailed cyclic 0 downtime test
 
-function nodeMailerConfirmationEmail(source, responseData) {
-  console.log("NodeMailerTest triggered");
-  let date = new Date();
-
-  let smtpTransporter = nodemailer.createTransport({
-    service: "Gmail",
-    port: 465,
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
-    },
-  });
-  let mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
-    subject: `nodecronServer - ${source} - triggered at ${date}`,
-    html: `
-    <h3>Successful trigger at ${date}</h3>
-    <h3>Source  ${source}</h3>
-    ${
-      responseData
-        ? `<p>Response data: ${JSON.stringify(responseData)}</p>`
-        : ""
-    }
-
-   `,
-  };
-
-  smtpTransporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      console.error("Failed to send mail:", error);
-    } else {
-      console.log("Success email sent");
-    }
-  });
-}
 
 // nodeMailerTest()
 //every morning at 7
@@ -167,11 +132,26 @@ function nodeCron2WithConfirmationEmail() {
   nodeCron.schedule("*/1 * * * *", () => {
     console.log("NodeCron2 triggered");
     let date = new Date();
-    nodeMailerConfirmationEmail("nodeCron2")
-  });
-};
+    // nodeMailerConfirmationEmail("nodeCron2");
 
-nodeCron2WithConfirmationEmail()
+    const body = {
+      name: "Patrick",
+      email: "test",
+      message: "test",
+    }
+    axios
+      .post("http://localhost:5000/nodeMailer", {body})
+      .then((res) => {
+        console.log(res.data);
+        nodeMailerConfirmationEmail("nodeCron2", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+}
+
+nodeCron2WithConfirmationEmail();
 
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);

@@ -3,9 +3,9 @@ const nodemailer = require("nodemailer");
 
 router.post("/", (req, res) => {
   const { name, email, message } = req.body;
-  if (message.length === 0) {
-    return res.json({ msg: "Please Enter a Message!" });
-  }
+  // if (message.length === 0) {
+  //   return res.json({ msg: "Please Enter a Message!" });
+  // }
 
   let smtpTransporter = nodemailer.createTransport({
     service: "Gmail",
@@ -15,15 +15,29 @@ router.post("/", (req, res) => {
       pass: process.env.GMAIL_PASS,
     },
   });
-  let mailOptions = {
-    from: email,
-    to: process.env.GMAIL_USER,
-    subject: `Portfolio - contact from ${name}`,
-    html: `
+
+  let mailOptions 
+  if (!name || !email || !message) {
+     mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: `Portfolio - contact from test - cron job 1 minute past`,
+      html: `
+    <h3>Message from test</h3>
+    <p>Message: test</p>
+   `,
+    };
+  } else {
+     mailOptions = {
+      from: email,
+      to: process.env.GMAIL_USER,
+      subject: `Portfolio - contact from ${name} cron job 1 minute past`,
+      html: `
     <h3>Message from ${name} - ${email}</h3>
     <p>Message: ${message}</p>
    `,
-  };
+    };
+  }
 
   smtpTransporter.sendMail(mailOptions, (error) => {
     try {
