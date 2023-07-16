@@ -171,7 +171,7 @@ function nodeCron2WithConfirmationEmail() {
   });
 };
 
-nodeCron1WithConfirmationEmail()
+nodeCron2WithConfirmationEmail()
 
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);
