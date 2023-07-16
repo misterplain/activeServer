@@ -1,11 +1,10 @@
 require("dotenv").config({ path: __dirname + "/.env" });
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require("passport");
+const app = express();
 const cors = require("cors");
 const path = require("path");
-//middleware
-const keepServerActive = require("./keepServerActive");
-// const scheduledAPICall = require("./HPNotePad/middleware/scheduledAPICall");
 const { logger } = require("./middleware/logger");
 const { logEvents } = require("./middleware/logger");
 //config
@@ -31,28 +30,15 @@ const commentsRoutes = require("./bcnMinimalista/routes/commentsRoutes");
 const contactPortfolioRoute = require("./portfolio/routes/contactRoute");
 //fantasticfy
 const fetchDataRoute = require("./Fantasticfy/routes/fetchDataRoute");
-const passport = require("passport");
-const app = express();
 //boilerPlate routes
 const authRoutesBoilerPlate = require("./boilerPlate/routes/auth");
-
 //nodecron
 const nodemailer = require("nodemailer");
 const nodeCron = require("node-cron");
-const nodeMailerRoute = require("./utils/nodeMailer");
 
 //Connect to Mongo DB
 connectDB();
 
-//boilerPlate cookie sessions and passport library
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: ["privateKey"],
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-//   })
-// );
-//express-sessions attempt
 app.use(
   session({
     secret: "privateKey",
@@ -91,7 +77,7 @@ const whitelist = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log("Origin: ", origin); // Log the origin
+      console.log("Origin: ", origin); 
       if (whitelist.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
       } else {
@@ -105,53 +91,11 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 
-//keep server active
-keepServerActive();
 app.use("/log", logRoute);
-// app.use("/nodeMailer", nodeMailerRoute);
 
 //notepad
-// scheduledAPICall();
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
-
-
-
-// nodeMailerTest()
-//every morning at 7
-function nodeCron1WithConfirmationEmail() {
-  nodeCron.schedule("0 7 * * * ", () => {
-    console.log("NodeCron1 triggered");
-    let date = new Date();
-    nodeMailerConfirmationEmail("nodeCron1");
-  });
-}
-
-//everyminute
-function nodeCron2WithConfirmationEmail() {
-  nodeCron.schedule("*/1 * * * *", () => {
-    console.log("NodeCron2 triggered");
-    let date = new Date();
-    // nodeMailerConfirmationEmail("nodeCron2");
-
-    const body = {
-      name: "Patrick",
-      email: "test",
-      message: "test",
-    }
-    axios
-      .post("http://localhost:5000/nodeMailer", {body})
-      .then((res) => {
-        console.log(res.data);
-        nodeMailerConfirmationEmail("nodeCron2", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-}
-
-nodeCron2WithConfirmationEmail();
 
 //bcnMinimalista
 app.use("/bcnmin/users", usersRoutes);
@@ -173,4 +117,5 @@ app.use("/fantasticfy/data", fetchDataRoute);
 app.use("/auth", authRoutesBoilerPlate);
 
 const port = process.env.PORT || 5000;
+
 app.listen(port, console.log(`server listing to port 5000 only`));

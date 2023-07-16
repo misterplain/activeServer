@@ -3,9 +3,9 @@ const nodemailer = require("nodemailer");
 
 router.post("/", (req, res) => {
   const { name, email, message } = req.body;
-  // if (message.length === 0) {
-  //   return res.json({ msg: "Please Enter a Message!" });
-  // }
+  if (message.length === 0) {
+    return res.json({ msg: "Please Enter a Message!" });
+  }
 
   let smtpTransporter = nodemailer.createTransport({
     service: "Gmail",
