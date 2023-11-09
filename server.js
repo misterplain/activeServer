@@ -32,6 +32,9 @@ const contactPortfolioRoute = require("./portfolio/routes/contactRoute");
 const fetchDataRoute = require("./Fantasticfy/routes/fetchDataRoute");
 //boilerPlate routes
 const authRoutesBoilerPlate = require("./boilerPlate/routes/auth");
+//keep active
+const keepActiveRoutes = require("./keepActive/keepActiveRoute");
+const keepServerActive = require("./keepActive/keepServerActive");
 //nodecron
 const nodemailer = require("nodemailer");
 const nodeCron = require("node-cron");
@@ -115,6 +118,23 @@ app.use("/fantasticfy/data", fetchDataRoute);
 
 //boilerPlate
 app.use("/auth", authRoutesBoilerPlate);
+
+//keepActive
+keepServerActive()
+app.use("/keepActive", keepActiveRoutes);
+
+nodeCron.schedule("*/1 * * * *", () => {
+  console.log("Cron job triggered.");
+  
+  axios.post("/keepActive", {})
+    .then((response) => {
+      console.log("Keep Active route triggered successfully.");
+      console.log(response.data); 
+    })
+    .catch((error) => {
+      console.error("Error triggering Keep Active route:", error);
+    });
+});
 
 const port = process.env.PORT || 5000;
 
