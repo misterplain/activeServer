@@ -123,19 +123,6 @@ app.use("/auth", authRoutesBoilerPlate);
 keepServerActive()
 app.use("/keepActive", keepActiveRoutes);
 
-nodeCron.schedule("*/1 * * * *", () => {
-  console.log("Cron job triggered.");
-  
-  axios.post("/keepActive", {})
-    .then((response) => {
-      console.log("Keep Active route triggered successfully.");
-      console.log(response.data); 
-    })
-    .catch((error) => {
-      console.error("Error triggering Keep Active route:", error);
-    });
-});
-
 const port = process.env.PORT || 5000;
 
 app.listen(port, console.log(`server listing to port 5000 only`));
