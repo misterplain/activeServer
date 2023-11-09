@@ -305,3 +305,311 @@ const deleteAllData = asyncHandler(async (req, res) => {
 });
 
 module.exports = { fetchData, getDataByDate, deleteAllData };
+
+// const Data = require("../models/dataModel");
+// const asyncHandler = require("express-async-handler");
+// const axios = require("axios");
+// const { nodeMailerConfirmationEmail } = require("../../utils/nodeMailer");
+
+// const errorMessage = "Error";
+
+// const getJoke = async () => {
+//   const options = {
+//     method: "GET",
+//     url: "https://dad-jokes.p.rapidapi.com/random/joke",
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
+//     },
+//   };
+
+//   try {
+//     let response = await axios.request(options).timeout(2000);
+//     if (response.status >= 200 && response.status < 300) {
+//       const joke = {
+//         setup: response.data.body[0].setup,
+//         punchline: response.data.body[0].punchline,
+//       };
+//       return joke;
+//     } else {
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     return { error: error.message }
+//   }
+// };
+
+// const getHoroscope = async (signHS) => {
+//   const options = {
+//     method: "GET",
+//     url: `https://ohmanda.com/api/horoscope/${signHS}/`,
+//   };
+//   try {
+//     let response = await axios.request(options).timeout(2000);
+//     if (response.data.horoscope) {
+//       return response.data.horoscope;
+//     } else {
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     return { error: error.message }
+//   }
+// };
+
+// //third api call - moonphase
+// const getMoonPhase = async () => {
+//   const options = {
+//     method: "GET",
+//     url: "https://moon-phase.p.rapidapi.com/basic",
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "moon-phase.p.rapidapi.com",
+//     },
+//   };
+
+//   try {
+//     let response = await axios.request(options).timeout(2000);
+//     if (response.status >= 200 && response.status < 300) {
+//       const moonphaseData = {
+//         mainText: response.data.phase_name,
+//         fullMoon: response.data.days_until_next_full_moon,
+//       };
+//       return moonphaseData;
+//     } else {
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log({
+//       message: "catch block moon phase",
+//       response: error,
+//     });
+//     return { error: error.message }
+//   }
+// };
+
+// //fourt api call - weather
+// const getForecast = async () => {
+//   const options = {
+//     method: "GET",
+//     url: "https://forecast9.p.rapidapi.com/rapidapi/forecast/Barcelona/summary/",
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "forecast9.p.rapidapi.com",
+//     },
+//   };
+
+//   try {
+//     let response = await axios.request(options).timeout(2000);
+//     if (response.status >= 200 && response.status < 300) {
+//       console.log("success");
+//       const items = response.data.forecast.items;
+//       const extractedData = items.slice(0, 10).map((item) => ({
+//         date: item.date,
+//         min: item.temperature.min,
+//         max: item.temperature.max,
+//       }));
+
+//       return extractedData;
+//     } else {
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     return { error: error.message }
+//   }
+// };
+
+
+// const getNews = async () => {
+//   const options = {
+//     method: "GET",
+//     url: "https://cnbc.p.rapidapi.com/news/v2/list-trending",
+//     params: {
+//       tag: "Articles",
+//       count: "5",
+//     },
+//     headers: {
+//       "X-RapidAPI-Key": "0824a2c382mshb6a7ecac1677e76p11250cjsndc3ea1d6ec95",
+//       "X-RapidAPI-Host": "cnbc.p.rapidapi.com",
+//     },
+//   };
+
+//   try {
+//     let response = await axios.request(options).timeout(2000);
+//     if (response.status >= 200 && response.status < 300) {
+//       console.log("success");
+//       const items = response.data.data.mostPopularEntries.assets;
+//       console.log(response.data);
+//       const extractedData = items.slice(0, 5).map((item) => ({
+//         title: item.shorterHeadline,
+//         url: item.url,
+//         description: item.description,
+//         body: item.description,
+//         snippet: item.description,
+//         image: item.promoImage.url,
+//       }));
+
+//       return extractedData;
+//     } else {
+//       console.log("success");
+//       return errorMessage;
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     return { error: error.message }
+//   }
+// };
+
+// const fetchData = asyncHandler(async (req, res) => {
+//   try {
+//     let time = new Date();
+//     let fetchedDataObject = {};
+//     fetchedDataObject.date = time;
+//     fetchedDataObject.horoscope = {};
+//     const horoscopeData = {};
+
+//     const [joke, moonPhase, forecast, news] = await Promise.all([
+//       getJoke(),
+//       getMoonPhase(),
+//       getForecast(),
+//       getNews(),
+//     ]).catch((error) => {
+//       console.error("Error fetching data:", error);
+//     });
+
+//     if (!joke || !forecast || !news) {
+//       console.log("Error fetching data joke or moonphase or forecast or news");
+//       return;
+//     }
+
+//     fetchedDataObject.joke = joke;
+
+//     fetchedDataObject.moonPhase = moonPhase;
+
+//     fetchedDataObject.forecast = forecast;
+
+//     fetchedDataObject.news = news;
+
+//     const horoscopeSigns = [
+//       "aquarius",
+//       "pisces",
+//       "aries",
+//       "taurus",
+//       "gemini",
+//       "cancer",
+//       "leo",
+//       "virgo",
+//       "libra",
+//       "scorpio",
+//       "sagittarius",
+//       "capricorn",
+//     ];
+//     const results = await Promise.all(
+//       horoscopeSigns.map(async (sign) => await getHoroscope(sign))
+//     ).catch((error) => {
+//       console.error("Error fetching horoscopes:", error);
+//       return errorMessage;
+//     });
+
+//     if (!results || results.length !== horoscopeSigns.length) {
+//       console.log("Error fetching horoscopes");
+//       return;
+//     }
+
+//     results.forEach((result, index) => {
+//       horoscopeData[horoscopeSigns[index]] = result;
+//     });
+//     fetchedDataObject.horoscope = horoscopeData;
+
+//     saveDataToDB(fetchedDataObject);
+//   } catch (error) {
+//     console.error("Error in fetchData:", error);
+//     return { error: error.message }
+//   }
+// });
+
+// const saveDataToDB = async (objectToSave) => {
+//   let time = new Date();
+//   console.log(objectToSave, "objectToSave from within saveDataToDB");
+
+//   let dataToSave = {
+//     date: time,
+//   };
+
+//   if (objectToSave.horoscope) {
+//     dataToSave.horoscope = objectToSave.horoscope;
+//   }
+//   if (objectToSave.joke) {
+//     dataToSave.joke = objectToSave.joke;
+//   }
+//   if (objectToSave.moonPhase) {
+//     dataToSave.moonPhase = objectToSave.moonPhase;
+//   }
+//   if (objectToSave.forecast) {
+//     dataToSave.forecast = objectToSave.forecast;
+//   }
+//   if (Array.isArray(objectToSave.news)) {
+//     dataToSave.news = objectToSave.news;
+//   } else {
+//     console.error("Invalid news data format");
+//   }
+
+//   const newData = new Data(dataToSave);
+
+//   try {
+//     await newData.save();
+//     console.log("saved to db");
+//     nodeMailerConfirmationEmail("HPNotePad", newData);
+//     return { success: true, message: "Data saved to DB" };
+//   } catch (error) {
+//     console.error("Error in saveDataToDB:", error.message);
+//     return { success: false, message: "Error saving data to DB" };
+//   }
+// };
+
+// const getDataByDate = asyncHandler(async (req, res) => {
+//   try {
+//     const dateToFind = req.params.date;
+//     const startOfDay = new Date(dateToFind);
+//     const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000 - 1);
+
+//     const data = await Data.find({
+//       date: { $gte: startOfDay, $lte: endOfDay },
+//     }).exec();
+//     if (data && data.length > 0) {
+//       res.json(data);
+//     } else {
+//       console.log("no data for this date");
+//       res.json({ message: "No data for this date" });
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     res.status(500).end();
+//   }
+// });
+
+// //function to delete all data from before february 12th, 2023
+// const deleteAllData = asyncHandler(async (req, res) => {
+//   console.log("deleteAllData");
+
+//   const dateToFind = "2023-08-12";
+//   const startOfDay = new Date(dateToFind);
+//   console.log(startOfDay);
+//   const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000 - 1);
+
+//   try {
+//     const data = await Data.deleteMany({
+//       date: { $lte: endOfDay },
+//     });
+//     res.json(data);
+//     console.log("data deleted");
+//   } catch (error) {
+//     console.log(error.message);
+
+//     res.status(500).end();
+//   }
+// });
+
+// module.exports = { fetchData, getDataByDate, deleteAllData };
