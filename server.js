@@ -120,8 +120,8 @@ app.use("/fantasticfy/data", fetchDataRoute);
 app.use("/auth", authRoutesBoilerPlate);
 
 //keepActive
-keepServerActive()
-app.use("/keepActive", keepActiveRoutes);
+// keepServerActive()
+// app.use("/keepActive", keepActiveRoutes);
 
 const port = process.env.PORT || 5000;
 
