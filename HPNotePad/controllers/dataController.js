@@ -216,6 +216,8 @@ const fetchData = asyncHandler(async (req, res) => {
     fetchedDataObject.horoscope = horoscopeData;
 
     saveDataToDB(fetchedDataObject);
+    console.log("request end time" + new Date());
+    res.status(200).json({ message: "Data fetched and saved successfully" });
   } catch (error) {
     console.error("Error in fetchData:", error);
     return errorMessage;
@@ -261,26 +263,80 @@ const saveDataToDB = async (objectToSave) => {
   }
 };
 
+// const getDataByDate = asyncHandler(async (req, res) => {
+//   try {
+//     const dateToFind = req.params.date;
+//     const startOfDay = new Date(dateToFind);
+//     const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000 - 1);
+
+//     const data = await Data.find({
+//       date: { $gte: startOfDay, $lte: endOfDay },
+//     }).exec();
+//     if (data && data.length > 0) {
+//       res.json(data);
+//     } else {
+//       console.log("no data for this date");
+//       res.json({ message: "No data for this date" });
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//     res.status(500).end();
+//   }
+// });
+
 const getDataByDate = asyncHandler(async (req, res) => {
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   try {
     const dateToFind = req.params.date;
     const startOfDay = new Date(dateToFind);
     const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000 - 1);
 
-    const data = await Data.find({
+    let data = await Data.find({
       date: { $gte: startOfDay, $lte: endOfDay },
     }).exec();
+
+    console.log(data)
+
+    
+
+    if (data.length===0 && dateToFind === formatDate(new Date())) {
+      console.log("No data found for today's date");
+
+      const fetchDataResponse = await fetchData();
+
+      if (fetchDataResponse.success) {
+        data = await Data.find({
+          date: { $gte: startOfDay, $lte: endOfDay },
+        }).exec();
+
+        console.log("Data fetched successfully for today");
+      } else {
+        console.log("Failed to fetch data for today");
+        return res.status(500).json({ message: "Failed to fetch data for today" });
+      }
+    } else if (data.length===0 && dateToFind !== formatDate(new Date())) {
+      console.log("No data found for this date (not today)");
+      return res.status(404).json({ message: "Data not found for this date" });
+    }
+
     if (data && data.length > 0) {
-      res.json(data);
+      return res.json(data);
     } else {
-      console.log("no data for this date");
-      res.json({ message: "No data for this date" });
+      console.log("No data found for this date");
+      return res.json({ message: "No data found for this date" });
     }
   } catch (error) {
-    console.log(error.message);
-    res.status(500).end();
+    console.error("An error occurred:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 //function to delete all data from before february 12th, 2023
 const deleteAllData = asyncHandler(async (req, res) => {
