@@ -66,6 +66,7 @@ mongoose.connection.on("error", (err) => {
   );
 });
 
+// console.log(typeof process.env.RAPID_API_KEY)
 app.use("/", express.static(path.resolve(path.join(__dirname, "./build"))));
 
 app.use(express.json());
