@@ -6,6 +6,23 @@ const dotenv = require("dotenv");
 
 const errorMessage = "Error";
 
+const nodeCronTrigger = asyncHandler(async (req, res) => {
+  console.log("nodeCronTrigger");
+
+  const fetchDataResponse = await fetchData();
+  console.log(fetchDataResponse);
+
+  if (fetchDataResponse.success) {
+    console.log("Data fetched successfully for today");
+    return res.json({ message: "Data fetched successfully for today" });
+  } else {
+    console.log("Failed to fetch data for today");
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch data for today" });
+  }
+})
+
 const getJoke = async () => {
   const options = {
     method: "GET",
@@ -236,6 +253,7 @@ const saveDataToDB = async (objectToSave) => {
   let dataToSave = {
     date: time,
   };
+  console.log(dataToSave)
 
   if (objectToSave.horoscope) {
     dataToSave.horoscope = objectToSave.horoscope;
@@ -347,6 +365,6 @@ const deleteAllData = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { fetchData, getDataByDate, deleteAllData };
+module.exports = { fetchData, getDataByDate, deleteAllData, nodeCronTrigger };
 
 
