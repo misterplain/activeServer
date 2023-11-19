@@ -3,6 +3,11 @@
 # dependencies
 /node_modules
 node_modules
+bcnMinimalista
+/bcnMinimalista
+boilerPlate
+/boilerPlate
+
 /.pnp
 .pnp.js
 

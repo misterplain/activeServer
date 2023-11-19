@@ -18,15 +18,6 @@ const contactRoute = require("./HPNotePad/routes/contactRoute");
 const logRoute = require("./HPNotePad/routes/logRoute");
 const dataRoute = require("./HPNotePad/routes/dataRoute");
 const nodeCronRoute = require("./HPNotePad/routes/nodeCronRoute");
-//bcnMinmalista routes
-const usersRoutes = require("./bcnMinimalista/routes/usersRoutes");
-const authRoutes = require("./bcnMinimalista/routes/authRoutes");
-const refreshRoutes = require("./bcnMinimalista/routes/refreshRoutes");
-const logoutRoutes = require("./bcnMinimalista/routes/logoutRoutes");
-const blogsRoutes = require("./bcnMinimalista/routes/blogsRoutes");
-const collabRoutes = require("./bcnMinimalista/routes/collabRoutes");
-const favoritesRoutes = require("./bcnMinimalista/routes/favoritesRoutes");
-const commentsRoutes = require("./bcnMinimalista/routes/commentsRoutes");
 //porfolio routes
 const contactPortfolioRoute = require("./portfolio/routes/contactRoute");
 //fantasticfy
@@ -77,7 +68,6 @@ const whitelist = [
   "https://hpnotepad.onrender.com",
   "https://fantasticfy.onrender.com",
   "https://patrickobrien.onrender.com",
-  "https://bcnminimalista.onrender.com",
 ];
 app.use(
   cors({
@@ -102,16 +92,6 @@ app.use("/log", logRoute);
 app.use("/notepad/contact", contactRoute);
 app.use("/notepad/data", dataRoute);
 app.use("/notepad/nodeCron", nodeCronRoute);
-
-//bcnMinimalista
-app.use("/bcnmin/users", usersRoutes);
-app.use("/bcnmin/auth", authRoutes);
-app.use("/bcnmin/refresh", refreshRoutes);
-app.use("/bcnmin/logout", logoutRoutes);
-app.use("/bcnmin/blogs", blogsRoutes);
-app.use("/bcnmin/collab", collabRoutes);
-app.use("/bcnmin/favorites", favoritesRoutes);
-app.use("/bcnmin/comments", commentsRoutes);
 
 //portfolio
 app.use("/portfolio/contact", contactPortfolioRoute);
